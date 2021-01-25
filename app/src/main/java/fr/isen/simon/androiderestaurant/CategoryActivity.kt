@@ -1,8 +1,8 @@
 package fr.isen.simon.androiderestaurant
 
-import android.content.Intent.getIntent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import fr.isen.simon.androiderestaurant.databinding.ActivityCategoryActivityBinding
 
 
@@ -22,6 +22,16 @@ class CategoryActivity : AppCompatActivity() {
             //Get extras:
             val title = intent.getStringExtra("title")
             binding.categoryTitle.text = title
+
+            binding.listCategory.layoutManager = LinearLayoutManager(this)
+
+            //Recuperer le string qui correspond
+            val strings = resources.getStringArray(R.array.liste_entrees)
+            val plats = ArrayList<Plat>()
+            loop@ for (i in 1..strings.size){
+                plats.add(Plat(strings[i-1],"",0.0f))
+            }
+            binding.listCategory.adapter = CategoryAdapter(plats)
         }
     }
     override fun onDestroy() {

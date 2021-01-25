@@ -6,4 +6,10 @@
     <string name="str_btn_desserts">Desserts</string>
     <string name="str_btn_entrees">Entrees</string>
     <string name="ctx_desc_menu_img">Ratatouille picture</string>
+
+    <string-array name="liste_entrees">
+        <item>Langouste</item>
+        <item>Pizza</item>
+        <item>Soupe de poisson</item>
+    </string-array>
 </resources>
