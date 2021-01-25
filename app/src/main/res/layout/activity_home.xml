@@ -8,10 +8,12 @@
 
     <ImageView
         android:id="@+id/background"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         android:scaleType="fitEnd"
+        android:scaleX="1.05"
+        android:scaleY="1.05"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +82,7 @@
             android:id="@+id/platsBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/str_btn_entrees" />
+            android:text="@string/str_btn_plats" />
 
         <Button
             android:id="@+id/dessertsBtn"

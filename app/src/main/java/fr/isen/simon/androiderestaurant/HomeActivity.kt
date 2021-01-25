@@ -1,9 +1,11 @@
 package fr.isen.simon.androiderestaurant
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import fr.isen.simon.androiderestaurant.databinding.ActivityHomeBinding
+
 
 private lateinit var binding: ActivityHomeBinding
 
@@ -17,14 +19,24 @@ class HomeActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.entreesBtn.setOnClickListener{
-            Toast.makeText(applicationContext, "Bonsoir", Toast.LENGTH_SHORT).show()
+            val intent = Intent( applicationContext, CategoryActivity::class.java )
+            intent.putExtra("title","Entrées")
+            this.startActivity(intent)
         }
         binding.platsBtn.setOnClickListener{
-            Toast.makeText(applicationContext, "Clicked Plats", Toast.LENGTH_SHORT).show()
+            val intent = Intent( applicationContext, CategoryActivity::class.java )
+            intent.putExtra("title","Plats")
+            this.startActivity(intent)
         }
         binding.dessertsBtn.setOnClickListener{
-            Toast.makeText(applicationContext, "Clicked Desserts", Toast.LENGTH_SHORT).show()
+            val intent = Intent( applicationContext, CategoryActivity::class.java )
+            intent.putExtra("title","Desserts")
+            this.startActivity(intent)
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        println("Home Activity Destroyed")
+    }
 }
