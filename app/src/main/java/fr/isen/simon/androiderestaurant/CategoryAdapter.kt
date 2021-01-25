@@ -3,6 +3,7 @@ package fr.isen.simon.androiderestaurant
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import fr.isen.simon.androiderestaurant.databinding.ActivityCategoryActivityBinding
 import fr.isen.simon.androiderestaurant.databinding.ItemPlatBinding
@@ -14,6 +15,7 @@ class CategoryAdapter (private val mPlats : List<Plat>): RecyclerView.Adapter<Ca
     ): CategoryAdapter.CategoryHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemBinding = ItemPlatBinding.inflate(inflater,parent,false)
+
         return CategoryHolder(itemBinding)
     }
 
@@ -30,5 +32,7 @@ class CategoryAdapter (private val mPlats : List<Plat>): RecyclerView.Adapter<Ca
         val name = binding.namePlat
         val description = binding.descriptionPlat
         val tarif = binding.prixPlat
+
+
     }
 }
