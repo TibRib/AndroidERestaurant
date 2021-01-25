@@ -17,7 +17,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.entreesBtn.setOnClickListener{
-            Toast.makeText(applicationContext, "Clicked Entrees", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Bonsoir", Toast.LENGTH_SHORT).show()
         }
         binding.platsBtn.setOnClickListener{
             Toast.makeText(applicationContext, "Clicked Plats", Toast.LENGTH_SHORT).show()

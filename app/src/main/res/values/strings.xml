@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">AndroidERestaurant</string>
-    <string name="title_home">Ratatouille Online</string>
+    <string name="title_home">Ratatouille online</string>
+    <string name="description_home">Mangez les meilleurs plats de la région</string>
     <string name="str_btn_plats">Plats</string>
     <string name="str_btn_desserts">Desserts</string>
     <string name="str_btn_entrees">Entrees</string>
-    <string name="ctx_desc_menu_img">Ratatouille\'s picture</string>
+    <string name="ctx_desc_menu_img">Ratatouille picture</string>
 </resources>
