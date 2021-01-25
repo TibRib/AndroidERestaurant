@@ -39,4 +39,5 @@ class HomeActivity : AppCompatActivity() {
         super.onDestroy()
         println("Home Activity Destroyed")
     }
+
 }

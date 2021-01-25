@@ -18,10 +18,11 @@ class CategoryActivity : AppCompatActivity() {
 
         setContentView(view)
 
-        //Get extras:
-        val title = intent.getStringExtra("title")
-        binding.categoryTitle.text = title
-
+        if(intent.extras != null){
+            //Get extras:
+            val title = intent.getStringExtra("title")
+            binding.categoryTitle.text = title
+        }
     }
     override fun onDestroy() {
         super.onDestroy()
