@@ -8,8 +8,21 @@
     <string name="ctx_desc_menu_img">Ratatouille picture</string>
 
     <string-array name="liste_entrees">
+        <item>Filets de saumon</item>
+        <item>Salade avocats</item>
+        <item>Croquettes pour chat</item>
+        <item>Salade caesar</item>
+        <item>Chèvre chaud</item>
+    </string-array>
+    <string-array name="liste_plats">
         <item>Langouste</item>
         <item>Pizza</item>
         <item>Soupe de poisson</item>
+        <item>Cabillaud</item>
+    </string-array>
+    <string-array name="liste_desserts">
+        <item>Mousse au chocolat</item>
+        <item>Crème au caramel</item>
+        <item>Eclair au chocolat</item>
     </string-array>
 </resources>

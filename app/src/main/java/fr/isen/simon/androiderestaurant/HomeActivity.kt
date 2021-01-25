@@ -21,16 +21,19 @@ class HomeActivity : AppCompatActivity() {
         binding.entreesBtn.setOnClickListener{
             val intent = Intent( applicationContext, CategoryActivity::class.java )
             intent.putExtra("title","Entrées")
+            intent.putExtra("list","liste_entrees")
             this.startActivity(intent)
         }
         binding.platsBtn.setOnClickListener{
             val intent = Intent( applicationContext, CategoryActivity::class.java )
             intent.putExtra("title","Plats")
+            intent.putExtra("list","liste_plats")
             this.startActivity(intent)
         }
         binding.dessertsBtn.setOnClickListener{
             val intent = Intent( applicationContext, CategoryActivity::class.java )
             intent.putExtra("title","Desserts")
+            intent.putExtra("list","liste_desserts")
             this.startActivity(intent)
         }
     }

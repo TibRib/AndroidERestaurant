@@ -23,13 +23,16 @@ class CategoryActivity : AppCompatActivity() {
             val title = intent.getStringExtra("title")
             binding.categoryTitle.text = title
 
+            val staticListName = intent.getStringExtra("list")
+
             binding.listCategory.layoutManager = LinearLayoutManager(this)
 
             //Recuperer le string qui correspond
-            val strings = resources.getStringArray(R.array.liste_entrees)
+            val res = resources.getIdentifier(staticListName, "array", packageName)
+            val strings = resources.getStringArray(res)
             val plats = ArrayList<Plat>()
             loop@ for (i in 1..strings.size){
-                plats.add(Plat(strings[i-1],"",0.0f))
+                plats.add(Plat(strings[i - 1], "", 0.0f))
             }
             binding.listCategory.adapter = CategoryAdapter(plats)
         }

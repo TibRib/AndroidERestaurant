@@ -22,7 +22,6 @@ class CategoryAdapter (private val mPlats : List<Plat>): RecyclerView.Adapter<Ca
         holder.name.text = myItem.name
         holder.description.text = myItem.description
         holder.tarif.text = myItem.tarif.toString()+"€"
-
     }
 
     override fun getItemCount(): Int = mPlats.size
