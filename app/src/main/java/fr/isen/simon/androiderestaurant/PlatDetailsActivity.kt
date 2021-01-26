@@ -3,6 +3,7 @@ package fr.isen.simon.androiderestaurant
 import android.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.squareup.picasso.Picasso
 import fr.isen.simon.androiderestaurant.databinding.ActivityCategoryActivityBinding
 import fr.isen.simon.androiderestaurant.databinding.ActivityHomeBinding
@@ -22,6 +23,10 @@ class PlatDetailsActivity : AppCompatActivity() {
         //Get extras:
         val title = intent.getStringExtra("title")
         binding.PlatSingleTitre.text = title
+
+        binding.button.setOnClickListener {
+            Toast.makeText(applicationContext, "Plat ajouté au panier", Toast.LENGTH_SHORT).show()
+        }
 
         val desc = intent.getStringExtra("description")
         binding.platSingleDescription.text = desc

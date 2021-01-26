@@ -50,10 +50,9 @@ class CategoryActivity : AppCompatActivity() {
 
     private fun displayCategories(plats: ArrayList<Plat>) {
         binding.listCategory.adapter = CategoryAdapter(plats) {
-            Toast.makeText(applicationContext, it.name, Toast.LENGTH_SHORT).show()
             val intent = Intent(this, PlatDetailsActivity::class.java)
             intent.putExtra("title", it.name)
-            intent.putExtra("description", it.description + it.ingredientsToString())
+            intent.putExtra("description", it.description +"\n\n"+ it.ingredientsToString())
             intent.putExtra("price", it.getFormattedPrice())
             intent.putExtra("image", it.getThumbnail())
 
