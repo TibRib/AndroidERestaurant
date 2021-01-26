@@ -1,15 +1,22 @@
 package fr.isen.simon.androiderestaurant
 
+import android.R
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import fr.isen.simon.androiderestaurant.databinding.ItemPlatBinding
 import fr.isen.simon.androiderestaurant.models.Plat
 
-class CategoryAdapter(private val mPlats: List<Plat>, private val categoryClickListener: (Plat) -> Unit): RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
+
+class CategoryAdapter(
+    private val mPlats: List<Plat>,
+    private val categoryClickListener: (Plat) -> Unit
+): RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
     override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
+        parent: ViewGroup,
+        viewType: Int
     ): CategoryAdapter.CategoryHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemBinding = ItemPlatBinding.inflate(inflater, parent, false)
@@ -22,6 +29,14 @@ class CategoryAdapter(private val mPlats: List<Plat>, private val categoryClickL
         holder.name.text = myItem.name
         holder.description.text = myItem.description
         holder.tarif.text = myItem.getFormattedPrice()
+
+        val thumbnail = myItem.getThumbnail()
+        if( thumbnail != null && thumbnail.isNotEmpty()) {
+            Picasso.get()
+                .load(thumbnail)
+                .placeholder(R.drawable.ic_menu_search)
+                .into(holder.image)
+        }
 
         holder.layout.setOnClickListener {
             categoryClickListener.invoke(mPlats[position])
