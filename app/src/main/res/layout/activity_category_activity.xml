@@ -7,11 +7,12 @@
     tools:context=".CategoryActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/backgroundCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleX="1.1"
-        android:scaleY="1.1"
+        android:scaleType="centerCrop"
+        android:scaleX="1.05"
+        android:scaleY="1.05"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -62,7 +63,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ratatouilleOverlay"
         android:layout_width="86dp"
         android:layout_height="160dp"
         app:layout_constraintBottom_toBottomOf="parent"
