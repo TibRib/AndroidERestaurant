@@ -3,18 +3,18 @@ package fr.isen.simon.androiderestaurant
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import fr.isen.simon.androiderestaurant.databinding.ActivityCategoryActivityBinding
 import fr.isen.simon.androiderestaurant.databinding.ItemPlatBinding
 
-class CategoryAdapter (private val mPlats : List<Plat>): RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
+
+class CategoryAdapter(private val mPlats: List<Plat>, private val categoryClickListener: (Plat) -> Unit): RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+            parent: ViewGroup,
+            viewType: Int
     ): CategoryAdapter.CategoryHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val itemBinding = ItemPlatBinding.inflate(inflater,parent,false)
+        val itemBinding = ItemPlatBinding.inflate(inflater, parent, false)
 
         return CategoryHolder(itemBinding)
     }
@@ -24,15 +24,19 @@ class CategoryAdapter (private val mPlats : List<Plat>): RecyclerView.Adapter<Ca
         holder.name.text = myItem.name
         holder.description.text = myItem.description
         holder.tarif.text = myItem.tarif.toString()+"€"
+
+        holder.layout.setOnClickListener {
+            categoryClickListener.invoke(mPlats[position])
+        }
     }
 
     override fun getItemCount(): Int = mPlats.size
 
-    class CategoryHolder(binding : ItemPlatBinding) : RecyclerView.ViewHolder(binding.root){
+    class CategoryHolder(binding: ItemPlatBinding) : RecyclerView.ViewHolder(binding.root){
         val name = binding.namePlat
         val description = binding.descriptionPlat
         val tarif = binding.prixPlat
 
-
+        val layout = binding.root
     }
 }
