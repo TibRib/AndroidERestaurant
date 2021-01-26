@@ -1,11 +1,10 @@
 package fr.isen.simon.androiderestaurant
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import fr.isen.simon.androiderestaurant.databinding.ActivityCategoryActivityBinding
 import fr.isen.simon.androiderestaurant.databinding.ItemPlatBinding
+import fr.isen.simon.androiderestaurant.models.Plat
 
 
 class CategoryAdapter(private val mPlats: List<Plat>, private val categoryClickListener: (Plat) -> Unit): RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {

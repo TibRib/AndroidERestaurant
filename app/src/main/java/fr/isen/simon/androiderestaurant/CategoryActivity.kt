@@ -3,13 +3,19 @@ package fr.isen.simon.androiderestaurant
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import com.google.gson.JsonElement
 import fr.isen.simon.androiderestaurant.databinding.ActivityCategoryActivityBinding
+import fr.isen.simon.androiderestaurant.models.DataJSON
+import fr.isen.simon.androiderestaurant.models.Plat
+import fr.isen.simon.androiderestaurant.models.ShopDataJSON
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -27,8 +33,6 @@ class CategoryActivity : AppCompatActivity() {
 
         setContentView(view)
 
-        postShop(applicationContext)
-
 
         if(intent.extras != null){
             //Get extras:
@@ -39,31 +43,29 @@ class CategoryActivity : AppCompatActivity() {
 
             binding.listCategory.layoutManager = LinearLayoutManager(this)
 
-            //Recuperer le string qui correspond
-            val res = resources.getIdentifier(staticListName, "array", packageName)
-            val strings = resources.getStringArray(res)
-            val plats = ArrayList<Plat>()
-            loop@ for (i in 1..strings.size){
-                plats.add(Plat(strings[i - 1], "Description", 10.0f))
-            }
-            binding.listCategory.adapter = CategoryAdapter(plats){
-                Toast.makeText(applicationContext, it.name, Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, PlatDetailsActivity::class.java)
-                intent.putExtra("title", it.name)
-                intent.putExtra("description", it.description)
-                intent.putExtra("price", it.tarif)
-
-                startActivity(intent)
-            }
+            loadShopCategory(title)
         }
 
     }
+
+    private fun displayCategories(plats: ArrayList<Plat>) {
+        binding.listCategory.adapter = CategoryAdapter(plats) {
+            Toast.makeText(applicationContext, it.name, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PlatDetailsActivity::class.java)
+            intent.putExtra("title", it.name)
+            intent.putExtra("description", it.description)
+            intent.putExtra("price", it.tarif)
+
+            startActivity(intent)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         println("Category Activity Destroyed")
     }
 
-    fun postShop(context: Context?) {
+    fun loadShopCategory(category : String) {
         val postUrl = "http://test.api.catering.bluecodegames.com/menu"
         val requestQueue = Volley.newRequestQueue(this)
         val postData = JSONObject()
@@ -76,9 +78,29 @@ class CategoryActivity : AppCompatActivity() {
 
 
         val jsonObjectRequest = JsonObjectRequest( Request.Method.POST, postUrl, postData,{
-                response -> println(response)
+            response -> println(response)
+            //We parse the response in here
+
+            val gson = Gson()
+            val element: JsonElement = gson.fromJson(response.toString(), JsonElement::class.java)
+            val json: DataJSON = gson.fromJson(element, DataJSON::class.java)
+            println(json.data.size)
+            json.data.forEach(action = {
+                println(it.name)
+                it.items.forEach(action = {
+                    println(it.name)
+                })
+            })
+            val plats = json.data.firstOrNull{ it.name == category }?.items
+            if(plats != null){
+                displayCategories(plats)
+            }else{
+                println("No category found !")
+            }
+
+            //displayCategories()
         }) {
-                error -> error.printStackTrace()
+            error -> error.printStackTrace()
         }
 
         requestQueue.add(jsonObjectRequest)
