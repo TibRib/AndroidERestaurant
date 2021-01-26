@@ -55,6 +55,7 @@ class CategoryActivity : AppCompatActivity() {
             intent.putExtra("title", it.name)
             intent.putExtra("description", it.description)
             intent.putExtra("price", it.getFormattedPrice())
+            intent.putExtra("image", it.getThumbnail())
 
             startActivity(intent)
         }
