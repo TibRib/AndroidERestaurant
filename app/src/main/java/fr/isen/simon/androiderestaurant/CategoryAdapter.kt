@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.isen.simon.androiderestaurant.databinding.ItemPlatBinding
 import fr.isen.simon.androiderestaurant.models.Plat
 
-
 class CategoryAdapter(private val mPlats: List<Plat>, private val categoryClickListener: (Plat) -> Unit): RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
     override fun onCreateViewHolder(
             parent: ViewGroup,
@@ -22,7 +21,7 @@ class CategoryAdapter(private val mPlats: List<Plat>, private val categoryClickL
         val myItem = mPlats[position]
         holder.name.text = myItem.name
         holder.description.text = myItem.description
-        holder.tarif.text = myItem.tarif.toString()+"€"
+        holder.tarif.text = myItem.getFormattedPrice()
 
         holder.layout.setOnClickListener {
             categoryClickListener.invoke(mPlats[position])
@@ -35,6 +34,7 @@ class CategoryAdapter(private val mPlats: List<Plat>, private val categoryClickL
         val name = binding.namePlat
         val description = binding.descriptionPlat
         val tarif = binding.prixPlat
+        val image = binding.platThumbnail
 
         val layout = binding.root
     }

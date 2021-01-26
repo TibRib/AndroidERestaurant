@@ -54,7 +54,7 @@ class CategoryActivity : AppCompatActivity() {
             val intent = Intent(this, PlatDetailsActivity::class.java)
             intent.putExtra("title", it.name)
             intent.putExtra("description", it.description)
-            intent.putExtra("price", it.tarif)
+            intent.putExtra("price", it.getFormattedPrice())
 
             startActivity(intent)
         }

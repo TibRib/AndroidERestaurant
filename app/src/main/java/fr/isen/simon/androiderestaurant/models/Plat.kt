@@ -13,7 +13,37 @@ class Plat (
     @SerializedName
         ("categ_name_fr") val category : String,
     @SerializedName
-        ("images") val images : ArrayList<String>
+        ("images") val images : List<String>,
+    @SerializedName
+        ("prices") val prices : List<PriceDataJSON>,
+    @SerializedName
+        ("ingredients") val ingredients : List<IngredientDataJSON>,
+    ) : Serializable {
+        fun getPrice() = prices[0].price.toFloat()
+        fun getFormattedPrice() = getPrice().toString() + "€"
 
-    ) : Serializable
-{}
+        fun getThumbnail() : String?{
+            return if (images.isNotEmpty() && images[0].isNotEmpty()){
+                images[0]
+            } else{
+                null
+            }
+        }
+
+        fun getAllPictures() : List<String>?{
+            return if (images.isNotEmpty()){
+                images.filter { it.isNotEmpty() }
+            } else{
+                null
+            }
+        }
+
+        fun getIngredientsNames() : List<String>?{
+            return if (ingredients.isNotEmpty()){
+                val filtered : List<IngredientDataJSON> = ingredients.filter{ it.name.isNotEmpty() }
+                filtered.map { it -> it.name  }
+            } else{
+                null
+            }
+        }
+}

@@ -22,6 +22,9 @@ class PlatDetailsActivity : AppCompatActivity() {
         binding.PlatSingleTitre.text = title
 
         val desc = intent.getStringExtra("description")
-        binding.PlatSingleDescription.text = desc
+        binding.platSingleDescription.text = desc
+
+        val tarif = intent.getStringExtra("price")
+        binding.detailsPrice.text = tarif
     }
 }
