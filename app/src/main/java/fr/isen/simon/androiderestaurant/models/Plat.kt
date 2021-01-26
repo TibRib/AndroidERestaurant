@@ -46,4 +46,12 @@ class Plat (
                 null
             }
         }
+
+        fun ingredientsToString() : String{
+           var str : String = "Liste des ingrédients : \n"
+           ingredients.forEach(action = {
+               str += "- "+it.name+"\n"
+            })
+           return str
+        }
 }

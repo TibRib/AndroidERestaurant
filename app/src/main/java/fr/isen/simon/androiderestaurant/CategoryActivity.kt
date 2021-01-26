@@ -53,7 +53,7 @@ class CategoryActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, it.name, Toast.LENGTH_SHORT).show()
             val intent = Intent(this, PlatDetailsActivity::class.java)
             intent.putExtra("title", it.name)
-            intent.putExtra("description", it.description)
+            intent.putExtra("description", it.description + it.ingredientsToString())
             intent.putExtra("price", it.getFormattedPrice())
             intent.putExtra("image", it.getThumbnail())
 
