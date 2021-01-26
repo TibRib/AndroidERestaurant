@@ -49,7 +49,7 @@ class CategoryAdapter(
         val name = binding.namePlat
         val description = binding.descriptionPlat
         val tarif = binding.prixPlat
-        val image = binding.platThumbnail
+        val image = binding.itemPicture
 
         val layout = binding.root
     }
