@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 class Plat (
-    val description:String,
-    val tarif:Float,
+    @SerializedName
+        ("description") val description : String,
     @SerializedName
         ("name_fr") val name : String,
     @SerializedName
