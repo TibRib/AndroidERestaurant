@@ -1,9 +1,8 @@
-package fr.isen.simon.androiderestaurant
+package fr.isen.simon.androiderestaurant.adapters
 
 import android.R
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.isen.simon.androiderestaurant.databinding.ItemPlatBinding
@@ -17,14 +16,14 @@ class CategoryAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CategoryAdapter.CategoryHolder {
+    ): CategoryHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemBinding = ItemPlatBinding.inflate(inflater, parent, false)
 
         return CategoryHolder(itemBinding)
     }
 
-    override fun onBindViewHolder(holder: CategoryAdapter.CategoryHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
         val myItem = mPlats[position]
         holder.name.text = myItem.name
         holder.description.text = myItem.description

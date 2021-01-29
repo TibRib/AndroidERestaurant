@@ -1,10 +1,7 @@
 package fr.isen.simon.androiderestaurant
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
@@ -12,10 +9,10 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.JsonElement
+import fr.isen.simon.androiderestaurant.adapters.CategoryAdapter
 import fr.isen.simon.androiderestaurant.databinding.ActivityCategoryActivityBinding
 import fr.isen.simon.androiderestaurant.models.DataJSON
 import fr.isen.simon.androiderestaurant.models.Plat
-import fr.isen.simon.androiderestaurant.models.ShopDataJSON
 import org.json.JSONException
 import org.json.JSONObject
 
