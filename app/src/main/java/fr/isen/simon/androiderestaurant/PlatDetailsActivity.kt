@@ -14,6 +14,10 @@ import fr.isen.simon.androiderestaurant.models.Plat
 private lateinit var binding: ActivityPlatDetailsBinding
 
 class PlatDetailsActivity : AppCompatActivity() {
+
+    private var quantity : Int = 0
+    private var mPlat : Plat? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,6 +29,8 @@ class PlatDetailsActivity : AppCompatActivity() {
         val lottieAnimationView = binding.animationView
         lottieAnimationView.imageAssetsFolder = "images/"
         binding.cookanimation.imageAssetsFolder = "images/"
+
+        setQuantity(0, binding)
 
         lottieAnimationView.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {}
@@ -41,7 +47,8 @@ class PlatDetailsActivity : AppCompatActivity() {
         })
 
         //Get extras:
-        val plat : Plat = intent.getSerializableExtra("plat") as Plat
+        val plat = intent.getSerializableExtra("plat") as Plat
+        this.mPlat = plat
 
         binding.button.setOnClickListener {
             //Toast.makeText(applicationContext, "Plat ajouté au panier", Toast.LENGTH_SHORT).show()
@@ -52,12 +59,30 @@ class PlatDetailsActivity : AppCompatActivity() {
             cardAnim.visibility = View.VISIBLE
         }
 
+        binding.btnPlus.setOnClickListener{
+            setQuantity(quantity+1, binding)
+        }
+        binding.btnMin.setOnClickListener{
+            setQuantity(quantity-1, binding)
+        }
+
         binding.PlatSingleTitre.text = plat.name;
         binding.platSingleDescription.text = plat.description;
         binding.platIngredients.text = plat.ingredientsToString();
 
         binding.detailsPrice.text = plat.getFormattedPrice();
         displayCarrousel(plat.getAllPictures())
+    }
+
+    private fun setQuantity( value : Int, binding: ActivityPlatDetailsBinding){
+        this.quantity = Math.max(0,value)
+        binding.detailsQuantity.text = this.quantity.toString()
+        var btnTxt : String = "AJOUTER AU PANIER"
+        if(value > 0) {
+            val priceFinal: String = (this.quantity * this.mPlat!!.getPrice()).toString() + "€"
+            btnTxt += " ("+priceFinal+")"
+        }
+        binding.button.text = btnTxt
     }
 
     private fun displayCarrousel(images: List<String>?) {
