@@ -3,7 +3,8 @@ Devoir Android - Ratatouille - Thibaud SIMON
 Pour le cours de développement sous Android Studio
 
 ### En ce moment :
-Partie IV- a/
+Partie IV- g/
++ successful singleton Basket handling thanks to Koin injector
 
 ## Previews
 ### Menu / Home page
@@ -12,5 +13,7 @@ Partie IV- a/
 ![plats](repository/images/plats.PNG)
 ### Dishes in the desserts category
 ![desserts](repository/images/desserts.PNG)
-### Details (displaying the Added-to-cart animation)
+### Details page
 ![achat](repository/images/achat.PNG)
+### Shopping Basket
+![panier](repository/images/panier.PNG)
