@@ -1,10 +1,12 @@
 package fr.isen.simon.androiderestaurant
 
-import android.R
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import fr.isen.simon.androiderestaurant.databinding.ActivityHomeBinding
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 
 private lateinit var binding: ActivityHomeBinding
@@ -14,30 +16,40 @@ class HomeActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
+        //Starting Koin
+        startKoin {
+            androidLogger()
+            androidContext(applicationContext)
+            modules(appModule)
+        }
+
+        Injector().printItemCount()
+
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
 
         setContentView(view)
 
         binding.entreesBtn.setOnClickListener{
-            val intent = Intent(applicationContext, CategoryActivity::class.java)
-            intent.putExtra("title", "Entrées")
-            intent.putExtra("list", "liste_entrees")
-            this.startActivity(intent)
+            launchCategories("Entrées")
         }
         binding.platsBtn.setOnClickListener{
-            val intent = Intent(applicationContext, CategoryActivity::class.java)
-            intent.putExtra("title", "Plats")
-            intent.putExtra("list", "liste_plats")
-            this.startActivity(intent)
+            launchCategories("Plats")
         }
         binding.dessertsBtn.setOnClickListener{
-            val intent = Intent(applicationContext, CategoryActivity::class.java)
-            intent.putExtra("title", "Desserts")
-            intent.putExtra("list", "liste_desserts")
-            this.startActivity(intent)
+            launchCategories("Desserts")
         }
 
+        binding.tempBasketButton.setOnClickListener {
+            this.startActivity(Intent(applicationContext, BasketActivity::class.java))
+        }
+
+    }
+
+    fun launchCategories(title : String){
+        val intent = Intent(applicationContext, CategoryActivity::class.java)
+        intent.putExtra("title", title)
+        this.startActivity(intent)
     }
 
     override fun onDestroy() {

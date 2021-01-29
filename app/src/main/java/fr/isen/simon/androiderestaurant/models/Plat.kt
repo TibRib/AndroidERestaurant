@@ -1,24 +1,27 @@
 package fr.isen.simon.androiderestaurant.models
 
+import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
+import java.io.FileWriter
 import java.io.Serializable
 
-class Plat (
+
+class Plat(
     @SerializedName
-        ("description") val description : String,
+        ("description") val description: String,
     @SerializedName
-        ("name_fr") val name : String,
+        ("name_fr") val name: String,
     @SerializedName
-        ("id") val id : Int,
+        ("id") val id: Int,
     @SerializedName
-        ("categ_name_fr") val category : String,
+        ("categ_name_fr") val category: String,
     @SerializedName
-        ("images") val images : List<String>,
+        ("images") val images: List<String>,
     @SerializedName
-        ("prices") val prices : List<PriceDataJSON>,
+        ("prices") val prices: List<PriceDataJSON>,
     @SerializedName
-        ("ingredients") val ingredients : List<IngredientDataJSON>,
-    ) : Serializable {
+        ("ingredients") val ingredients: List<IngredientDataJSON>,
+) : Serializable {
         fun getPrice() = prices[0].price.toFloat()
         fun getFormattedPrice() = getPrice().toString() + "€"
 
@@ -50,8 +53,8 @@ class Plat (
         fun ingredientsToString() : String{
            var str : String = "Liste des ingrédients : \n"
            ingredients.forEach(action = {
-               str += "- "+it.name+"\n"
-            })
+               str += "- " + it.name + "\n"
+           })
            return str
         }
 }

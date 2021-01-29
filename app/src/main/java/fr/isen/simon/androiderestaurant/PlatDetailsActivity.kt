@@ -30,7 +30,7 @@ class PlatDetailsActivity : AppCompatActivity() {
         lottieAnimationView.imageAssetsFolder = "images/"
         binding.cookanimation.imageAssetsFolder = "images/"
 
-        setQuantity(0, binding)
+        setQuantity(1, binding)
 
         lottieAnimationView.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {}
@@ -50,6 +50,7 @@ class PlatDetailsActivity : AppCompatActivity() {
         val plat = intent.getSerializableExtra("plat") as Plat
         this.mPlat = plat
 
+        //Action Panier
         binding.button.setOnClickListener {
             //Toast.makeText(applicationContext, "Plat ajouté au panier", Toast.LENGTH_SHORT).show()
             Snackbar.make(view, "Plat ajouté au panier", Snackbar.LENGTH_SHORT).show()
@@ -57,6 +58,11 @@ class PlatDetailsActivity : AppCompatActivity() {
             val cardAnim = binding.detailsAnimationCard
             lottieAnimationView.playAnimation()
             cardAnim.visibility = View.VISIBLE
+
+            for (i in 0 until quantity){
+               Injector().basketService.appendBasket(plat)
+            }
+            Injector().printItemCount()
         }
 
         binding.btnPlus.setOnClickListener{
@@ -75,10 +81,10 @@ class PlatDetailsActivity : AppCompatActivity() {
     }
 
     private fun setQuantity( value : Int, binding: ActivityPlatDetailsBinding){
-        this.quantity = Math.max(0,value)
+        this.quantity = Math.max(1,value)
         binding.detailsQuantity.text = this.quantity.toString()
         var btnTxt : String = "AJOUTER AU PANIER"
-        if(value > 0) {
+        if(value > 1) {
             val priceFinal: String = (this.quantity * this.mPlat!!.getPrice()).toString() + "€"
             btnTxt += " ("+priceFinal+")"
         }

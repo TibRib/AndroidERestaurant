@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CategoryActivity">
+    tools:context=".BasketActivity">
 
     <ImageView
         android:id="@+id/backgroundBasket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:scaleX="1.05"
         android:scaleY="1.05"
@@ -19,10 +19,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/parisbgnight" />
+        app:srcCompat="@color/teal_700" />
 
     <TextView
-        android:id="@+id/categoryTitle"
+        android:id="@+id/basketTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -32,22 +32,22 @@
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Mon titre" />
+        android:text="Mon panier"/>
 
     <TextView
-        android:id="@+id/categoryDescription"
+        android:id="@+id/basketDescription"
         android:layout_width="0dp"
         android:layout_height="31dp"
         android:fontFamily="casual"
-        android:text="Vous trouverez ici la liste des plats proposés"
+        android:text="Les plats enregistrés dans votre panier"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/listCategory"
-        app:layout_constraintStart_toStartOf="@+id/categoryTitle"
-        app:layout_constraintTop_toBottomOf="@+id/categoryTitle" />
+        app:layout_constraintEnd_toEndOf="@+id/listBasket"
+        app:layout_constraintStart_toStartOf="@+id/basketTitle"
+        app:layout_constraintTop_toBottomOf="@+id/basketTitle" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listCategory"
+        android:id="@+id/listBasket"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="32dp"
@@ -57,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryDescription"
+        app:layout_constraintTop_toBottomOf="@+id/basketDescription"
         tools:listitem="@layout/item_plat" >
 
     </androidx.recyclerview.widget.RecyclerView>

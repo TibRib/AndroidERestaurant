@@ -30,25 +30,20 @@ class CategoryActivity : AppCompatActivity() {
 
         setContentView(view)
 
-
         if(intent.extras != null){
             //Get extras:
             val title = intent.getStringExtra("title")
             binding.categoryTitle.text = title
-
             val staticListName = intent.getStringExtra("list")
-
             binding.listCategory.layoutManager = LinearLayoutManager(this)
-
-            loadShopCategory(title)
+            loadShopCategory(title!!)
         }
-
     }
 
     private fun displayCategories(plats: ArrayList<Plat>) {
         binding.listCategory.adapter = CategoryAdapter(plats) {
             val intent = Intent(this, PlatDetailsActivity::class.java)
-            intent.putExtra("plat",it);
+            intent.putExtra("plat",it)
 
             startActivity(intent)
         }
@@ -57,6 +52,7 @@ class CategoryActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         println("Category Activity Destroyed")
+
     }
 
     fun loadShopCategory(category : String) {

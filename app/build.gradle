@@ -37,7 +37,6 @@ android {
 }
 
 dependencies {
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.airbnb.android:lottie:3.4.0"
     implementation 'androidx.core:core-ktx:1.2.0'
@@ -50,4 +49,11 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //Koin Core
+    implementation "org.koin:koin-core:$koin_version"
+    implementation "org.koin:koin-core-ext:$koin_version"
+    testImplementation "org.koin:koin-test:$koin_version"
+    //Koin Android
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-scope:$koin_version"
 }
