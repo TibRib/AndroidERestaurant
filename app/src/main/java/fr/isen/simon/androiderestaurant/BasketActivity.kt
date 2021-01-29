@@ -13,8 +13,6 @@ private lateinit var binding: ActivityBasketBinding
 
 class BasketActivity : AppCompatActivity() {
 
-    private lateinit var plats : ArrayList<Plat>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_activity)
@@ -27,7 +25,6 @@ class BasketActivity : AppCompatActivity() {
         binding.listBasket.layoutManager = LinearLayoutManager(this)
 
         loadPlats()
-        displayCategories(plats)
 
         binding.binButton.setOnClickListener {
             Injector().basketService.clearItems()
@@ -37,8 +34,12 @@ class BasketActivity : AppCompatActivity() {
     }
 
     private fun loadPlats(){
-        this.plats = Injector().basketService.getItems()
-        displayCategories(plats)
+        val price = Injector().basketService.getTotalPrice().toString() + "€"
+        binding.totalBasket.text = "Total : ${price}"
+        val nbArticles = Injector().basketService.getItemsCount().toString()
+        binding.nbArticles.text = "Pour ${nbArticles} articles dans le panier"
+        displayCategories(Injector().basketService.getItems())
+
     }
 
     private fun displayCategories(plats: ArrayList<Plat>) {
