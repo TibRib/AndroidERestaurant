@@ -8,6 +8,7 @@ interface BasketService {
     fun getTotalPrice() : Float
     fun appendBasket(plat : Plat)
     fun getItems() : ArrayList<Plat>
+    fun clearItems()
 }
 
 /**
@@ -35,5 +36,9 @@ class BasketServiceImpl(
 
     override fun appendBasket(plat : Plat) {
         basketData.items.add(plat)
+    }
+
+    override fun clearItems() {
+        basketData.items.clear()
     }
 }
