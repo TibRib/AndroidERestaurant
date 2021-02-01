@@ -41,6 +41,7 @@ class PlatDetailsActivity : AppCompatActivity() {
                 cardAnim.visibility = View.GONE
                 println("Finished !")
             }
+
             override fun onAnimationCancel(animation: Animator) {}
             override fun onAnimationRepeat(animation: Animator) {}
         })
@@ -64,10 +65,10 @@ class PlatDetailsActivity : AppCompatActivity() {
         }
 
         binding.btnPlus.setOnClickListener{
-            setQuantity(quantity+1, binding)
+            setQuantity(quantity + 1, binding)
         }
         binding.btnMin.setOnClickListener{
-            setQuantity(quantity-1, binding)
+            setQuantity(quantity - 1, binding)
         }
 
         binding.PlatSingleTitre.text = plat.name;
@@ -77,19 +78,27 @@ class PlatDetailsActivity : AppCompatActivity() {
         binding.detailsPrice.text = plat.getFormattedPrice();
         displayCarrousel(plat.getAllPictures())
 
-        //Add the toolbar
-        var name : String = plat.name
-        if(name.length > 16){
-            name = name.substring(0,16)+"..."
+        //Add the toolbar - pick the first 3 words
+        //Here I get the first three words
+        var nbWords : Int = 1
+        var thirdSpacePos = plat.name.length
+        for (i in plat.name.indices) {
+            val char = plat.name[i]
+            if(char.isWhitespace()){
+                if(nbWords++ >= 3){
+                    thirdSpacePos = i
+                    break;
+                }
+            }
         }
+        val name = plat.name.take(thirdSpacePos)+ " en détails"
         val toolbarFragment = ToolbarFragment.new(name)
         supportFragmentManager.beginTransaction()
             .add(R.id.AppBarLayout, toolbarFragment)
             .commit()
     }
-
-    private fun setQuantity( value : Int, binding: ActivityPlatDetailsBinding){
-        this.quantity = Math.max(1,value)
+    private fun setQuantity(value: Int, binding: ActivityPlatDetailsBinding){
+        this.quantity = Math.max(1, value)
         binding.detailsQuantity.text = this.quantity.toString()
         var btnTxt : String = "AJOUTER AU PANIER"
         if(value > 1) {
@@ -108,20 +117,19 @@ class PlatDetailsActivity : AppCompatActivity() {
                 val myOffset = position * -2.0f * offset
                 if (position < -1) {
                     page.translationX = -myOffset
-                }else if (position <= 1.0f) {
+                } else if (position <= 1.0f) {
                     //val scaleFactor = Math.max(0.7f, 1 - Math.abs(position/2.0f))
                     val scaleFactor = 1.0f
-                    val alphaScale = 1 - Math.abs(position/2.0f)
+                    val alphaScale = 1 - Math.abs(position / 2.0f)
                     page.translationX = Math.max(0.8f, alphaScale)
                     page.scaleY = Math.max(0.8f, alphaScale)
                     page.scaleX = page.scaleY
-                    page.alpha =  alphaScale
+                    page.alpha = alphaScale
+                } else {
+                    page.setAlpha(0.0f)
+                    page.translationX = myOffset
                 }
-                else {
-                        page.setAlpha(0.0f)
-                        page.translationX = myOffset
-                    }
-                })
+            })
         }
     }
 }
