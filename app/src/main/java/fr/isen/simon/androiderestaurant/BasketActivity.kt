@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.isen.simon.androiderestaurant.adapters.CategoryAdapter
 import fr.isen.simon.androiderestaurant.databinding.ActivityBasketBinding
+import fr.isen.simon.androiderestaurant.models.BasketService
 import fr.isen.simon.androiderestaurant.models.Plat
+import org.koin.android.ext.android.inject
 
-
-private lateinit var binding: ActivityBasketBinding
 
 class BasketActivity : AppCompatActivity() {
+
+    private val basketService by inject<BasketService>()
+    private lateinit var binding: ActivityBasketBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,18 +30,18 @@ class BasketActivity : AppCompatActivity() {
         loadPlats()
 
         binding.binButton.setOnClickListener {
-            Injector().basketService.clearItems()
+            basketService.clearItems()
             loadPlats()
         }
 
     }
 
     private fun loadPlats(){
-        val price = Injector().basketService.getTotalPrice().toString() + "€"
+        val price = basketService.getTotalPrice().toString() + "€"
         binding.totalBasket.text = "Total : ${price}"
-        val nbArticles = Injector().basketService.getItemsCount().toString()
+        val nbArticles = basketService.getItemsCount().toString()
         binding.nbArticles.text = "Pour ${nbArticles} articles dans le panier"
-        displayCategories(Injector().basketService.getItems())
+        displayCategories(basketService.getItems())
 
     }
 

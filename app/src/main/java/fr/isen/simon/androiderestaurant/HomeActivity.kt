@@ -13,7 +13,6 @@ private lateinit var binding: ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
         //Starting Koin
@@ -22,8 +21,6 @@ class HomeActivity : AppCompatActivity() {
             androidContext(applicationContext)
             modules(appModule)
         }
-
-        Injector().printItemCount()
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root

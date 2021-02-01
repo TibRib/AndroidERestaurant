@@ -8,7 +8,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import fr.isen.simon.androiderestaurant.adapters.CarrouselAdapter
 import fr.isen.simon.androiderestaurant.databinding.ActivityPlatDetailsBinding
+import fr.isen.simon.androiderestaurant.models.BasketService
 import fr.isen.simon.androiderestaurant.models.Plat
+import org.koin.android.ext.android.inject
 
 
 private lateinit var binding: ActivityPlatDetailsBinding
@@ -17,6 +19,7 @@ class PlatDetailsActivity : AppCompatActivity() {
 
     private var quantity : Int = 0
     private var mPlat : Plat? = null
+    private val basketService by inject<BasketService>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +63,8 @@ class PlatDetailsActivity : AppCompatActivity() {
             cardAnim.visibility = View.VISIBLE
 
             for (i in 0 until quantity){
-               Injector().basketService.appendBasket(plat)
+               basketService.appendBasket(plat)
             }
-            Injector().printItemCount()
         }
 
         binding.btnPlus.setOnClickListener{
