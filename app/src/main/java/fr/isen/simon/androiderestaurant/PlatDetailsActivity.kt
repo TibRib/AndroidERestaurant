@@ -13,9 +13,8 @@ import fr.isen.simon.androiderestaurant.models.Plat
 import org.koin.android.ext.android.inject
 
 
-private lateinit var binding: ActivityPlatDetailsBinding
-
 class PlatDetailsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityPlatDetailsBinding
 
     private var quantity : Int = 0
     private var mPlat : Plat? = null
@@ -37,15 +36,12 @@ class PlatDetailsActivity : AppCompatActivity() {
 
         lottieAnimationView.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {}
-
             override fun onAnimationEnd(animation: Animator) {
                 val cardAnim = binding.detailsAnimationCard
                 cardAnim.visibility = View.GONE
                 println("Finished !")
             }
-
             override fun onAnimationCancel(animation: Animator) {}
-
             override fun onAnimationRepeat(animation: Animator) {}
         })
 
@@ -80,6 +76,16 @@ class PlatDetailsActivity : AppCompatActivity() {
 
         binding.detailsPrice.text = plat.getFormattedPrice();
         displayCarrousel(plat.getAllPictures())
+
+        //Add the toolbar
+        var name : String = plat.name
+        if(name.length > 16){
+            name = name.substring(0,16)+"..."
+        }
+        val toolbarFragment = ToolbarFragment.new(name)
+        supportFragmentManager.beginTransaction()
+            .add(R.id.AppBarLayout, toolbarFragment)
+            .commit()
     }
 
     private fun setQuantity( value : Int, binding: ActivityPlatDetailsBinding){
@@ -88,7 +94,7 @@ class PlatDetailsActivity : AppCompatActivity() {
         var btnTxt : String = "AJOUTER AU PANIER"
         if(value > 1) {
             val priceFinal: String = (this.quantity * this.mPlat!!.getPrice()).toString() + "€"
-            btnTxt += " ("+priceFinal+")"
+            btnTxt += " ($priceFinal)"
         }
         binding.button.text = btnTxt
     }

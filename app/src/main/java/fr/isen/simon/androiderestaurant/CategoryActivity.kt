@@ -17,14 +17,11 @@ import fr.isen.simon.androiderestaurant.models.Plat
 import org.json.JSONException
 import org.json.JSONObject
 
-
-private lateinit var binding: ActivityCategoryActivityBinding
-
 class CategoryActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCategoryActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_category_activity)
 
         binding = ActivityCategoryActivityBinding.inflate(layoutInflater)
         val view = binding.root
@@ -35,6 +32,11 @@ class CategoryActivity : AppCompatActivity() {
             //Get extras:
             val title = intent.getStringExtra("title")
             binding.categoryTitle.text = title
+            //Add the toolbar
+            val toolbarFragment = ToolbarFragment.new("Les ${title.toLowerCase()}")
+            supportFragmentManager.beginTransaction()
+                .add(R.id.AppBarLayout, toolbarFragment)
+                .commit()
             val staticListName = intent.getStringExtra("list")
             binding.listCategory.layoutManager = LinearLayoutManager(this)
             loadShopCategory(title!!)

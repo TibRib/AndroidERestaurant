@@ -19,10 +19,15 @@ class BasketActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_category_activity)
 
         binding = ActivityBasketBinding.inflate(layoutInflater)
         val view = binding.root
+
+        //Add the toolbar
+        val toolbarFragment = ToolbarFragment.new("Panier : vos plats")
+        supportFragmentManager.beginTransaction()
+            .add(R.id.AppBarLayout, toolbarFragment)
+            .commit()
 
         setContentView(view)
 

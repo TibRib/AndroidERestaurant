@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".BasketActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/AppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
     <ImageView
         android:id="@+id/backgroundBasket"
         android:layout_width="0dp"
@@ -33,7 +43,7 @@
         android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/AppBarLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listBasket"
