@@ -1,8 +1,11 @@
 package fr.isen.simon.androiderestaurant.models
 
 import android.content.Context
+import android.util.Base64
 import com.google.gson.Gson
 import java.io.File
+import java.nio.charset.Charset
+import kotlin.collections.ArrayList
 
 /**
  * Basket Service - interface
@@ -25,7 +28,7 @@ class BasketServiceImpl(
     private val basketData : BasketData,
     private var context : Context
 ): BasketService {
-    private var jsonPath : String = context.cacheDir.absolutePath + "basket.json"
+    private var jsonPath : String = context.cacheDir.absolutePath + "basket.bin"
 
     init{ //Constructeur : chargement auto de la sauvegarde JSON
         loadBasket(jsonPath)
@@ -60,15 +63,23 @@ class BasketServiceImpl(
         if(!filepath.isNullOrEmpty()) {
             val file = File(filepath)
             val jsonObject = Gson().toJson(basketData)
-            file.writeText(jsonObject)
+            //Encoding to Base64 Bytes for security
+            val encoded = Base64.encode(jsonObject.toString().toByteArray(Charsets.UTF_8), Base64.NO_PADDING)
+            file.writeBytes(encoded) // Writing as a binary
         }
     }
 
     override fun loadBasket(filepath: String) {
         val file = File(filepath)
         if(file.exists()) {
-            val read = file.readText()
-            val data: BasketData = Gson().fromJson(read, BasketData::class.java)
+            //Read the binary
+            val read : ByteArray = file.readBytes()
+            //Decode the bytes
+            val decoded : ByteArray = Base64.decode(read,Base64.NO_PADDING)
+            val string = decoded.toString(Charsets.UTF_8)
+            //Decode the resulting string
+            val data: BasketData = Gson().fromJson(string, BasketData::class.java)
+
             this.basketData.items = data.items
         }
     }
