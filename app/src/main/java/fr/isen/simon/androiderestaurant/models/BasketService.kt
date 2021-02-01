@@ -1,5 +1,9 @@
 package fr.isen.simon.androiderestaurant.models
 
+import android.content.Context
+import com.google.gson.Gson
+import java.io.File
+
 /**
  * Basket Service - interface
  */
@@ -9,6 +13,8 @@ interface BasketService {
     fun appendBasket(plat : Plat)
     fun getItems() : ArrayList<Plat>
     fun clearItems()
+    fun saveBasket(filepath : String)
+    fun loadBasket(filepath : String)
 }
 
 /**
@@ -16,8 +22,14 @@ interface BasketService {
  * Will use the BasketData data
  */
 class BasketServiceImpl(
-    private val basketData : BasketData
+    private val basketData : BasketData,
+    private var context : Context
 ): BasketService {
+    private var jsonPath : String = context.cacheDir.absolutePath + "basket.json"
+
+    init{ //Constructeur : chargement auto de la sauvegarde JSON
+        loadBasket(jsonPath)
+    }
     override fun getItemsCount(): Int {
         return basketData.items.size
     }
@@ -36,9 +48,28 @@ class BasketServiceImpl(
 
     override fun appendBasket(plat : Plat) {
         basketData.items.add(plat)
+        saveBasket(jsonPath)
     }
 
     override fun clearItems() {
         basketData.items.clear()
+        saveBasket(jsonPath)
+    }
+
+    override fun saveBasket(filepath: String) {
+        if(!filepath.isNullOrEmpty()) {
+            val file = File(filepath)
+            val jsonObject = Gson().toJson(basketData)
+            file.writeText(jsonObject)
+        }
+    }
+
+    override fun loadBasket(filepath: String) {
+        val file = File(filepath)
+        if(file.exists()) {
+            val read = file.readText()
+            val data: BasketData = Gson().fromJson(read, BasketData::class.java)
+            this.basketData.items = data.items
+        }
     }
 }
