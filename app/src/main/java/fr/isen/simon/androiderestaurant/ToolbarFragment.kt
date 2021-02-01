@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import fr.isen.simon.androiderestaurant.databinding.FragmentToolbarBinding
 import fr.isen.simon.androiderestaurant.models.BasketService
+import fr.isen.simon.androiderestaurant.models.BasketViewModel
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.compat.ScopeCompat.getViewModel
-import org.koin.android.viewmodel.compat.ScopeCompat.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ToolbarFragment : Fragment() {
     private var title: String? = null

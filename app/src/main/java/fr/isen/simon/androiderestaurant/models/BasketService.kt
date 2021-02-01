@@ -2,6 +2,8 @@ package fr.isen.simon.androiderestaurant.models
 
 import android.content.Context
 import android.util.Base64
+import android.view.View
+import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import java.io.File
 import java.nio.charset.Charset
