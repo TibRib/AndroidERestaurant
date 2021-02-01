@@ -1,17 +1,18 @@
 package fr.isen.simon.androiderestaurant
 
+import android.app.ActionBar
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import fr.isen.simon.androiderestaurant.databinding.ActivityHomeBinding
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
-
-private lateinit var binding: ActivityHomeBinding
-
 class HomeActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

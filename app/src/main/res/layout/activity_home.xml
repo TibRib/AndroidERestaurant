@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/AppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <fragment
+            android:name="fr.isen.simon.androiderestaurant.ToolbarFragment"
+            android:id="@+id/toolbarFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </com.google.android.material.appbar.AppBarLayout>
     <ImageView
         android:id="@+id/background"
         android:layout_width="wrap_content"
@@ -19,19 +35,22 @@
         app:srcCompat="@drawable/ratatouille_b6d3_1080x1920"
         tools:src="@drawable/ratatouille_b6d3_1080x1920" />
 
+
+
+
     <TextView
         android:id="@+id/titleString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="casual"
         android:text="@string/title_home"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/AppBarLayout" />
 
     <TextView
         android:id="@+id/subtitleString"
@@ -49,13 +68,12 @@
         android:id="@+id/imageView4"
         android:layout_width="130dp"
         android:layout_height="216dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/ctx_desc_menu_img"
         android:src="@drawable/ratatouille"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/titleString"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/AppBarLayout" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -87,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/str_btn_desserts" />
+
 
     </LinearLayout>
 
