@@ -29,7 +29,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/parisbgnight" />
 
     <TextView
@@ -47,16 +47,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listBasket"
-        android:layout_width="346dp"
-        android:layout_height="561dp"
+        android:layout_width="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="128dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/basketTitle"
-        tools:listitem="@layout/item_plat">
+        tools:listitem="@layout/item_plat"
+        android:layout_height="0dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -70,19 +70,8 @@
         app:layout_constraintTop_toTopOf="@+id/basketTitle"
         app:srcCompat="@drawable/ratatouille_chef" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/binButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_delete"
-        app:backgroundTint="@color/red"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -91,31 +80,65 @@
         app:contentPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listBasket">
+        app:layout_constraintTop_toBottomOf="@+id/listBasket"
+        app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="72dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/nbArticles"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
                 android:text="0 Articles"
                 android:textAlignment="textStart"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/binButton"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/totalBasket"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="Total : "
                 android:textAlignment="textStart"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/orderBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/binButton"
+                app:layout_constraintTop_toBottomOf="@+id/nbArticles" />
 
-        </LinearLayout>
+            <ImageButton
+                android:id="@+id/binButton"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#BF360C"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_baseline_delete_forever_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/orderBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="#FF6F00"
+                android:padding="8dp"
+                android:text="Commander"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/binButton" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
