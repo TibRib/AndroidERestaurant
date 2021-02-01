@@ -66,4 +66,18 @@
             app:srcCompat="@drawable/placeholder" />
     </androidx.cardview.widget.CardView>
 
+    <ImageButton
+        android:id="@+id/deleteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#3C8E0000"
+        android:scaleType="fitCenter"
+        android:tint="#B50E0E"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_delete_forever_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

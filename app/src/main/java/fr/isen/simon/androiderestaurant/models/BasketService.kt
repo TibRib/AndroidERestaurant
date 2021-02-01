@@ -16,6 +16,7 @@ interface BasketService {
     fun getItemsCount() : Int
     fun getTotalPrice() : Float
     fun appendBasket(plat : Plat)
+    fun removeItem(plat : Plat)
     fun getItems() : ArrayList<Plat>
     fun clearItems()
     fun saveBasket(filepath : String)
@@ -53,6 +54,11 @@ class BasketServiceImpl(
 
     override fun appendBasket(plat : Plat) {
         basketData.items.add(plat)
+        saveBasket(jsonPath)
+    }
+
+    override fun removeItem(plat: Plat) {
+        basketData.items.remove(plat)
         saveBasket(jsonPath)
     }
 

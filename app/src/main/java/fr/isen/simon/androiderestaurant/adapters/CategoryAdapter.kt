@@ -2,17 +2,26 @@ package fr.isen.simon.androiderestaurant.adapters
 
 import android.R
 import android.view.LayoutInflater
+import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
+import android.view.ViewManager
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.isen.simon.androiderestaurant.databinding.ItemPlatBinding
+import fr.isen.simon.androiderestaurant.models.BasketService
 import fr.isen.simon.androiderestaurant.models.Plat
-
+import fr.isen.simon.androiderestaurant.services.BasketInjectorUtility
+import org.koin.android.ext.android.inject
+import org.koin.core.context.GlobalContext.get
 
 class CategoryAdapter(
     private val mPlats: List<Plat>,
-    private val categoryClickListener: (Plat) -> Unit
+    private val categoryClickListener: (Plat) -> Unit,
+    private val categoryLongClickListener: (ImageButton) -> Unit
 ): RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -40,6 +49,17 @@ class CategoryAdapter(
         holder.layout.setOnClickListener {
             categoryClickListener.invoke(mPlats[position])
         }
+
+        holder.layout.setOnLongClickListener {
+            categoryLongClickListener.invoke(holder.deleteIcon)
+            true
+        }
+
+        holder.deleteIcon.setOnClickListener {
+            (it.getParent() as ViewManager).removeView(it)
+            BasketInjectorUtility().getService().removeItem(myItem)
+        }
+
     }
 
     override fun getItemCount(): Int = mPlats.size
@@ -49,6 +69,7 @@ class CategoryAdapter(
         val description = binding.descriptionPlat
         val tarif = binding.prixPlat
         val image = binding.itemPicture
+        val deleteIcon = binding.deleteButton
 
         val layout = binding.root
     }

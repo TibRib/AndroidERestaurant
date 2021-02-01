@@ -2,6 +2,7 @@ package fr.isen.simon.androiderestaurant
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.isen.simon.androiderestaurant.adapters.CategoryAdapter
@@ -46,12 +47,18 @@ class BasketActivity : AppCompatActivity() {
     }
 
     private fun displayCategories(plats: ArrayList<Plat>) {
-        binding.listBasket.adapter = CategoryAdapter(plats) {
+        binding.listBasket.adapter = CategoryAdapter(plats, {
             val intent = Intent(this, PlatDetailsActivity::class.java)
-            intent.putExtra("plat", it)
+            intent.putExtra("plat",it)
 
             startActivity(intent)
-        }
+        },{
+            if(it.visibility == View.GONE) {
+                it.visibility = View.VISIBLE
+            }else{
+                it.visibility = View.GONE
+            }
+        })
     }
 
     override fun onDestroy() {
