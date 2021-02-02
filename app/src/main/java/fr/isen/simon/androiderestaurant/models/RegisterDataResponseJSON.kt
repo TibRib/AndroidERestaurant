@@ -8,4 +8,13 @@ data class RegisterDataResponseJSON(
         ("data") val data: UserDataJSON,
     @SerializedName
         ("code") val code: Int
-) : Serializable{}
+) : Serializable{
+
+    fun isSuccessful() : Boolean{
+        return code == 200
+    }
+
+    fun extractUser() : UserDataJSON{
+        return data
+    }
+}
