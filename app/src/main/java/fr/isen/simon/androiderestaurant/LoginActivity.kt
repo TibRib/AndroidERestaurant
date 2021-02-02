@@ -17,6 +17,7 @@ import com.google.gson.JsonElement
 import fr.isen.simon.androiderestaurant.databinding.ActivityLoginBinding
 import fr.isen.simon.androiderestaurant.databinding.ActivityRegisterBinding
 import fr.isen.simon.androiderestaurant.models.RegisterDataResponseJSON
+import fr.isen.simon.androiderestaurant.services.APIcallsService
 import fr.isen.simon.androiderestaurant.services.UserPreferencesService
 import org.json.JSONException
 import org.json.JSONObject
@@ -25,6 +26,7 @@ import org.koin.android.ext.android.inject
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
     private val userPreferences by inject<UserPreferencesService>()
+    private val apiService by inject<APIcallsService>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,30 +78,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun callLoginService(email: String,pass: String){
-        //Call the API from there, for now :
-        val postUrl = "http://test.api.catering.bluecodegames.com/user/login"
-        val requestQueue = Volley.newRequestQueue(this)
-        val postData = JSONObject()
-        try {
-            postData.put("id_shop", "1")
-            postData.put("email", email)
-            postData.put("password", pass)
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        val jsonObjectRequest = JsonObjectRequest( Request.Method.POST, postUrl, postData,{
-                response -> println(response)
-            //Parse the response :
-            val gson = Gson()
-            val element: JsonElement = gson.fromJson(response.toString(), JsonElement::class.java)
-            val json: RegisterDataResponseJSON = gson.fromJson(element, RegisterDataResponseJSON::class.java)
-
-            //TODO : Utiliser la donnée de l'utilisateur
+        apiService.loginUser(email,pass).observeForever {
             userPreferences.setUserLoggedIn(true)
-        }) {
-                error -> error.printStackTrace()
         }
-        requestQueue.add(jsonObjectRequest)
     }
 
     private fun markAsInvalid(input: View){

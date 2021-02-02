@@ -27,97 +27,69 @@ class APIcallsServiceImpl(
 ) : APIcallsService{
     override fun queryCategory(categoryName: String): LiveData<CategoryDataJSON> {
         val categorydata = MutableLiveData<CategoryDataJSON>()
-        val postUrl = "http://test.api.catering.bluecodegames.com/menu"
-        val requestQueue = Volley.newRequestQueue(context)
-        val postData = JSONObject()
-        try {
-            postData.put("id_shop", "1")
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        val jsonObjectRequest = JsonObjectRequest( Request.Method.POST, postUrl, postData,{
-            response -> println(response)
 
-            val gson = Gson()
-            val element: JsonElement = gson.fromJson(response.toString(), JsonElement::class.java)
-            val jsonCategory: CategoryDataJSON = gson.fromJson(element, CategoryDataJSON::class.java)
-            if(jsonCategory != null){
-                categorydata.postValue(jsonCategory)
-            }
-        }) {
-            error -> error.printStackTrace()
+        val postData = JSONObject()
+            .put("id_shop", "1")
+
+        callToAPI("http://test.api.catering.bluecodegames.com/menu", postData).observeForever {
+            categorydata.postValue(Gson().fromJson(it, CategoryDataJSON::class.java))
         }
-        requestQueue.add(jsonObjectRequest)
         return categorydata
     }
 
     override fun registerUser(
-        firstname: String,
-        name: String,
-        email: String,
-        pass: String,
-        address: String
+        firstname: String,name: String,email: String,pass: String,address: String
     ): LiveData<UserDataJSON>  {
         val userInfos = MutableLiveData<UserDataJSON>()
 
-        val postUrl = "http://test.api.catering.bluecodegames.com/user/register"
-        val requestQueue = Volley.newRequestQueue(context)
         val postData = JSONObject()
-        try {
-            postData.put("id_shop", "1")
-            postData.put("firstname", firstname)
-            postData.put("lastname", name)
-            postData.put("email", email)
-            postData.put("password", pass)
-            postData.put("address", address)
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        val jsonObjectRequest = JsonObjectRequest( Request.Method.POST, postUrl, postData,{
-                response -> println(response)
-            //Parse the response :
-            val gson = Gson()
-            val element: JsonElement = gson.fromJson(response.toString(), JsonElement::class.java)
-            val json: RegisterDataResponseJSON = gson.fromJson(element, RegisterDataResponseJSON::class.java)
+            .put("id_shop", "1")
+            .put("firstname", firstname)
+            .put("lastname", name)
+            .put("email", email)
+            .put("password", pass)
+            .put("address", address)
 
-            if(json.isSuccessful()){
-                userInfos.postValue(json.extractUser())
+        callToAPI("http://test.api.catering.bluecodegames.com/user/register", postData).observeForever {
+            val parsedData: RegisterDataResponseJSON = Gson().fromJson(it, RegisterDataResponseJSON::class.java)
+            if(parsedData.isSuccessful()){
+                userInfos.postValue(parsedData.extractUser())
             }
-        }) {
-                error -> error.printStackTrace()
         }
-        requestQueue.add(jsonObjectRequest)
         return userInfos
     }
 
     override fun loginUser(email: String, pass: String): LiveData<UserDataJSON> {
         val userInfos = MutableLiveData<UserDataJSON>()
 
-        val postUrl = "http://test.api.catering.bluecodegames.com/user/login"
-        val requestQueue = Volley.newRequestQueue(context)
         val postData = JSONObject()
-        try {
-            postData.put("id_shop", "1")
-            postData.put("email", email)
-            postData.put("password", pass)
-        } catch (e: JSONException) {
-            e.printStackTrace()
+            .put("id_shop", "1")
+            .put("email", email)
+            .put("password", pass)
+
+        callToAPI("http://test.api.catering.bluecodegames.com/user/login", postData).observeForever {
+            val parsedData: RegisterDataResponseJSON = Gson().fromJson(it, RegisterDataResponseJSON::class.java)
+            if(parsedData.isSuccessful()){
+                userInfos.postValue(parsedData.extractUser())
+            }
         }
+        return userInfos
+    }
+
+    private fun callToAPI(postUrl : String, postData : JSONObject) : LiveData<JsonElement>{
+        var result : MutableLiveData<JsonElement> = MutableLiveData<JsonElement>()
+        val requestQueue = Volley.newRequestQueue(context)
         val jsonObjectRequest = JsonObjectRequest( Request.Method.POST, postUrl, postData,{
                 response -> println(response)
-            //Parse the response :
             val gson = Gson()
             val element: JsonElement = gson.fromJson(response.toString(), JsonElement::class.java)
-            val json: RegisterDataResponseJSON = gson.fromJson(element, RegisterDataResponseJSON::class.java)
-
-            if(json.isSuccessful()){
-                userInfos.postValue(json.extractUser())
-            }
+            //Here I affect my result
+            result.postValue(element)
         }) {
                 error -> error.printStackTrace()
         }
         requestQueue.add(jsonObjectRequest)
-        return userInfos
+        return result
     }
 
     override fun makeOrder() {
