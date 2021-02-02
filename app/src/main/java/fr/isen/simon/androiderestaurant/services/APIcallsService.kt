@@ -15,7 +15,7 @@ interface APIcallsService{
     fun queryCategory(categoryName : String) : LiveData<ArrayList<Plat>>
     fun registerUser(firstname : String, name: String,email: String,pass: String,address: String) : LiveData<UserDataJSON>
     fun loginUser(email: String, pass: String) : LiveData<UserDataJSON>
-    fun makeOrder()
+    fun makeOrder(idUser : String, basket : BasketData) : LiveData<List<OrderDataJSON>>
 }
 
 class APIcallsServiceImpl(
@@ -89,7 +89,20 @@ class APIcallsServiceImpl(
         return result
     }
 
-    override fun makeOrder() {
-        TODO("Not yet implemented")
+    override fun makeOrder(idUser : String, basket : BasketData) : LiveData<List<OrderDataJSON>> {
+        val orders = MutableLiveData<List<OrderDataJSON>>()
+
+        val postData = JSONObject()
+            .put("id_shop", "1")
+            .put("id_user", idUser)
+            .put("msg", Gson().toJson(basket))
+
+        callToAPI("http://test.api.catering.bluecodegames.com/user/order", postData).observeForever {
+            val parsedData: OrderResponseDataJSON = Gson().fromJson(it, OrderResponseDataJSON::class.java)
+            if(parsedData.isSuccessful()){
+                orders.postValue(parsedData.extractOrders())
+            }
+        }
+        return orders
     }
 }
