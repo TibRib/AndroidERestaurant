@@ -8,15 +8,11 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import com.google.gson.JsonObject
-import fr.isen.simon.androiderestaurant.models.CategoryDataJSON
-import fr.isen.simon.androiderestaurant.models.RegisterDataResponseJSON
-import fr.isen.simon.androiderestaurant.models.UserDataJSON
-import org.json.JSONException
+import fr.isen.simon.androiderestaurant.models.*
 import org.json.JSONObject
 
 interface APIcallsService{
-    fun queryCategory(categoryName : String) : LiveData<CategoryDataJSON>
+    fun queryCategory(categoryName : String) : LiveData<ArrayList<Plat>>
     fun registerUser(firstname : String, name: String,email: String,pass: String,address: String) : LiveData<UserDataJSON>
     fun loginUser(email: String, pass: String) : LiveData<UserDataJSON>
     fun makeOrder()
@@ -25,14 +21,15 @@ interface APIcallsService{
 class APIcallsServiceImpl(
     private val context : Context
 ) : APIcallsService{
-    override fun queryCategory(categoryName: String): LiveData<CategoryDataJSON> {
-        val categorydata = MutableLiveData<CategoryDataJSON>()
+    override fun queryCategory(categoryName: String): LiveData<ArrayList<Plat>> {
+        val categorydata = MutableLiveData<ArrayList<Plat>>()
 
         val postData = JSONObject()
             .put("id_shop", "1")
 
         callToAPI("http://test.api.catering.bluecodegames.com/menu", postData).observeForever {
-            categorydata.postValue(Gson().fromJson(it, CategoryDataJSON::class.java))
+            val shopCats = Gson().fromJson(it, ShopDataJSON::class.java)
+            categorydata.postValue(shopCats.getPlatsOfCategory(categoryName))
         }
         return categorydata
     }

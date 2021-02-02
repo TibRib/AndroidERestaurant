@@ -5,5 +5,9 @@ import java.io.Serializable
 
 data class CategoryDataJSON(
     @SerializedName
-        ("data") val data : ArrayList<ShopDataJSON>
-) : Serializable
+        ("name_fr") val name : String,
+    @SerializedName
+        ("items") val items : ArrayList<Plat>
+) : Serializable{
+    fun getPlats() : ArrayList<Plat> = items
+}

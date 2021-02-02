@@ -5,7 +5,17 @@ import java.io.Serializable
 
 data class ShopDataJSON(
     @SerializedName
-        ("name_fr") val name : String,
-    @SerializedName
-        ("items") val items : ArrayList<Plat>
-) : Serializable
+        ("data") val data : ArrayList<CategoryDataJSON>
+) : Serializable {
+    //Récupère la liste des plats d'une catégorie
+    fun getPlatsOfCategory(categoryName : String) : ArrayList<Plat>{
+        val categories = data
+        categories.forEach {
+            if(it.name == categoryName){
+                return it.getPlats()
+            }
+        }
+        return arrayListOf()
+    }
+
+}
