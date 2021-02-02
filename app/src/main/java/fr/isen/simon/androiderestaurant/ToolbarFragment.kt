@@ -10,12 +10,14 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import fr.isen.simon.androiderestaurant.databinding.FragmentToolbarBinding
 import fr.isen.simon.androiderestaurant.models.BasketService
+import fr.isen.simon.androiderestaurant.services.UserPreferencesService
 import org.koin.android.ext.android.inject
 
 
 class ToolbarFragment : Fragment() {
     private var title: String? = null
     private val basketService by inject<BasketService>()
+    private val userPreferences by inject<UserPreferencesService>()
 
     private lateinit var binding: FragmentToolbarBinding
 
@@ -34,7 +36,6 @@ class ToolbarFragment : Fragment() {
         binding = FragmentToolbarBinding.inflate(layoutInflater, container, false)
         val view = binding.root
 
-
         return view
     }
 
@@ -46,22 +47,22 @@ class ToolbarFragment : Fragment() {
         binding.toolbarBasketIcon.setOnClickListener {
             this.startActivity(Intent(context, BasketActivity::class.java))
         }
+
         binding.toolbarLoginIconNot.setOnClickListener {
             this.startActivity(Intent(context, LoginActivity::class.java))
         }
+        checkIsLoggedIn(binding.toolbarLoginIconYes, binding.toolbarLoginIconNot)
 
     }
 
     override fun onResume() {
         super.onResume()
         binding.toolbarItemCount.text = basketService.getItemsCount().toString()
-        checkIsLoggedIn(binding.toolbarLoginIconYes, binding.toolbarLoginIconYes)
+        checkIsLoggedIn(binding.toolbarLoginIconYes, binding.toolbarLoginIconNot)
     }
 
     fun checkIsLoggedIn(yesIcon: ImageView, noIcon: ImageView){
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        val isLoggedIn = sharedPref.getBoolean(getString(R.string.preference_logged_in), false)
-        if(isLoggedIn){
+        if(userPreferences.getUserLoggedIn()){
             yesIcon.visibility = View.VISIBLE
             noIcon.visibility = View.GONE
         }else{

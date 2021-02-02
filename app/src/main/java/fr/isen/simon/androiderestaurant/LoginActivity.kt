@@ -17,11 +17,15 @@ import com.google.gson.JsonElement
 import fr.isen.simon.androiderestaurant.databinding.ActivityLoginBinding
 import fr.isen.simon.androiderestaurant.databinding.ActivityRegisterBinding
 import fr.isen.simon.androiderestaurant.models.RegisterDataResponseJSON
+import fr.isen.simon.androiderestaurant.services.UserPreferencesService
 import org.json.JSONException
 import org.json.JSONObject
+import org.koin.android.ext.android.inject
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
+    private val userPreferences by inject<UserPreferencesService>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -71,14 +75,6 @@ class LoginActivity : AppCompatActivity() {
         return !TextUtils.isEmpty(target) && target.length >= 8
     }
 
-    private fun setLoggedInPreferences(value: Boolean){
-        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
-        with(sharedPref.edit()) {
-            putBoolean(getString(R.string.preference_logged_in), value)
-            apply()
-        }
-    }
-
     private fun callLoginService(email: String,pass: String){
         //Call the API from there, for now :
         val postUrl = "http://test.api.catering.bluecodegames.com/user/login"
@@ -99,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
             val json: RegisterDataResponseJSON = gson.fromJson(element, RegisterDataResponseJSON::class.java)
 
             //TODO : Utiliser la donnée de l'utilisateur
-            setLoggedInPreferences(true)
+            userPreferences.setUserLoggedIn(true)
         }) {
                 error -> error.printStackTrace()
         }
