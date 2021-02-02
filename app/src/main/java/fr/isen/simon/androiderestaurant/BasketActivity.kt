@@ -41,7 +41,7 @@ class BasketActivity : AppCompatActivity() {
         }
 
         binding.orderBtn.setOnClickListener {
-            this.startActivity(Intent(applicationContext, LoginActivity::class.java))
+            this.startActivity(Intent(applicationContext, RegisterActivity::class.java))
         }
 
     }

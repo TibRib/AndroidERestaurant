@@ -2,19 +2,16 @@ package fr.isen.simon.androiderestaurant
 
 import android.content.Context
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import fr.isen.simon.androiderestaurant.databinding.ActivityBasketBinding
+import androidx.fragment.app.Fragment
 import fr.isen.simon.androiderestaurant.databinding.FragmentToolbarBinding
 import fr.isen.simon.androiderestaurant.models.BasketService
-import fr.isen.simon.androiderestaurant.models.BasketViewModel
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class ToolbarFragment : Fragment() {
     private var title: String? = null
@@ -34,7 +31,7 @@ class ToolbarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentToolbarBinding.inflate(layoutInflater, container,false)
+        binding = FragmentToolbarBinding.inflate(layoutInflater, container, false)
         val view = binding.root
 
 
@@ -61,7 +58,7 @@ class ToolbarFragment : Fragment() {
         checkIsLoggedIn(binding.toolbarLoginIconYes, binding.toolbarLoginIconYes)
     }
 
-    fun checkIsLoggedIn(yesIcon : ImageView, noIcon : ImageView){
+    fun checkIsLoggedIn(yesIcon: ImageView, noIcon: ImageView){
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         val isLoggedIn = sharedPref.getBoolean(getString(R.string.preference_logged_in), false)
         if(isLoggedIn){

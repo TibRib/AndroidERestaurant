@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AndroidERestaurant"
         android:usesCleartextTraffic="true">
         <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".ToolbarActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".BasketActivity" />
         <activity android:name=".PlatDetailsActivity" />
         <activity android:name=".CategoryActivity" />
