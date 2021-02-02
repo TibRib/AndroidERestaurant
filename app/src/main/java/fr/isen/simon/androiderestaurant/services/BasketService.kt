@@ -31,7 +31,7 @@ class BasketServiceImpl(
     private val basketData : BasketData,
     private var context : Context
 ): BasketService {
-    private var jsonPath : String = context.cacheDir.absolutePath + "basket.bin"
+    private var jsonPath : String = context.cacheDir.absolutePath + "/basket.bin"
 
     init{ //Constructeur : chargement auto de la sauvegarde JSON
         loadBasket(jsonPath)
