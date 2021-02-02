@@ -12,6 +12,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/toolbarLoginIconNot"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_baseline_person_outline_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/toolbarLoginIconYes"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_baseline_person_outline_24"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_how_to_reg_24" />
+
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"

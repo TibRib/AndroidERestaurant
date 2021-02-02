@@ -40,6 +40,10 @@ class BasketActivity : AppCompatActivity() {
             loadPlats()
         }
 
+        binding.orderBtn.setOnClickListener {
+            this.startActivity(Intent(applicationContext, LoginActivity::class.java))
+        }
+
     }
 
     private fun loadPlats(){
