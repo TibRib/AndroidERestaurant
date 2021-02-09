@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import fr.isen.simon.androiderestaurant.activities.BasketActivity
 import fr.isen.simon.androiderestaurant.activities.LoginActivity
+import fr.isen.simon.androiderestaurant.activities.UserInfoActivity
 import fr.isen.simon.androiderestaurant.databinding.FragmentToolbarBinding
 import fr.isen.simon.androiderestaurant.viewmodels.BasketViewModel
 import fr.isen.simon.androiderestaurant.viewmodels.UserPreferencesViewModel
@@ -50,17 +51,12 @@ class ToolbarFragment : Fragment() {
         binding.toolbarLoginIconNot.setOnClickListener {
             this.startActivity(Intent(context, LoginActivity::class.java))
         }
-
+        binding.toolbarLoginIconYes.setOnClickListener {
+            this.startActivity(Intent(context, UserInfoActivity::class.java))
+        }
 
         userPreferences.isLoggedIn.observe(viewLifecycleOwner) { isLoggedIn ->
-            Log.d("Fragment Toolbar", "changed isLoggedin to $isLoggedIn")
-            if(isLoggedIn){
-                binding.toolbarLoginIconYes.visibility = View.VISIBLE
-                binding.toolbarLoginIconNot.visibility = View.GONE
-            }else{
-                binding.toolbarLoginIconYes.visibility = View.GONE
-                binding.toolbarLoginIconNot.visibility = View.VISIBLE
-            }
+            adaptLoggedInIcon(isLoggedIn)
         }
 
         basketViewModel.listSize.observe(viewLifecycleOwner){ size ->
@@ -70,7 +66,19 @@ class ToolbarFragment : Fragment() {
 
     }
 
-    fun adaptPastille(quantity : Int){
+    private fun adaptLoggedInIcon(isLoggedIn: Boolean?) {
+        Log.d("Fragment Toolbar", "changed isLoggedin to $isLoggedIn")
+        if(isLoggedIn == null) return
+        if (isLoggedIn) {
+            binding.toolbarLoginIconYes.visibility = View.VISIBLE
+            binding.toolbarLoginIconNot.visibility = View.GONE
+        } else {
+            binding.toolbarLoginIconYes.visibility = View.GONE
+            binding.toolbarLoginIconNot.visibility = View.VISIBLE
+        }
+    }
+
+    private fun adaptPastille(quantity : Int){
         binding.toolbarItemCount.text = quantity.toString()
         if (quantity>0){
             binding.pastillePanier.visibility = View.VISIBLE
@@ -81,6 +89,7 @@ class ToolbarFragment : Fragment() {
 
     override fun onResume() {
         adaptPastille(basketViewModel.getItemsCount())
+        adaptLoggedInIcon(userPreferences.loadSharedLoggedIn())
         super.onResume()
     }
 

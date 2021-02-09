@@ -5,16 +5,19 @@ import java.io.Serializable
 
 data class RegisterDataResponseJSON(
     @SerializedName
-        ("data") val data: UserDataJSON,
+        ("data") val data: UserDataJSON?,
     @SerializedName
-        ("code") val code: Int
+        ("code") val code: Int?
 ) : Serializable{
 
     fun isSuccessful() : Boolean{
-        return code == 200
+        if(code != null){
+            return code == 200
+        }
+        return false
     }
 
-    fun extractUser() : UserDataJSON{
+    fun extractUser() : UserDataJSON?{
         return data
     }
 }

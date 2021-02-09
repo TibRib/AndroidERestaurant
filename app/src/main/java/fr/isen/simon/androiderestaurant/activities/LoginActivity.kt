@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import fr.isen.simon.androiderestaurant.R
@@ -27,6 +28,11 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        if(userPreferences.loadSharedLoggedIn() == true){
+            //Already logged in
+            finish()
+        }
 
         binding.btnGoInscription.setOnClickListener {
             this.startActivity(Intent(applicationContext, RegisterActivity::class.java))
@@ -70,9 +76,27 @@ class LoginActivity : AppCompatActivity() {
         return !TextUtils.isEmpty(target) && target.length >= 8
     }
 
-    private fun callLoginService(email: String,pass: String){
-        apiService.loginUser(email,pass).observeForever {
-            userPreferences.setLoggedIn(true)
+    override fun onResume() {
+        if(userPreferences.loadSharedLoggedIn() == true){
+            //Already logged in
+            Toast.makeText(applicationContext, "Connecté ✔️", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+        super.onResume()
+    }
+
+    private fun callLoginService(email: String, pass: String){
+        apiService.loginUser(email,pass).observe(this) { user ->
+            if(user != null){
+                Toast.makeText(applicationContext, "Connecté ✔️", Toast.LENGTH_SHORT).show()
+                userPreferences.writeUser(user)
+                userPreferences.setLoggedIn(true)
+                finish()
+            }else{
+                Snackbar.make(binding.root, "Utilisateur ou mot de passe erroné ❌", Snackbar.LENGTH_LONG).show()
+                markAsInvalid(binding.loginInputEmailAddress)
+                markAsInvalid(binding.loginInputPassword)
+            }
         }
     }
 

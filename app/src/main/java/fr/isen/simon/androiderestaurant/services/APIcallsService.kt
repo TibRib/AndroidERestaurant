@@ -1,6 +1,7 @@
 package fr.isen.simon.androiderestaurant.services
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
@@ -13,14 +14,15 @@ import org.json.JSONObject
 
 interface APIcallsService{
     fun queryCategory(categoryName : String) : LiveData<ArrayList<Plat>>
-    fun registerUser(firstname : String, name: String,email: String,pass: String,address: String) : LiveData<UserDataJSON>
-    fun loginUser(email: String, pass: String) : LiveData<UserDataJSON>
+    fun registerUser(firstname : String, name: String,email: String,pass: String,address: String) : LiveData<UserDataJSON?>
+    fun loginUser(email: String, pass: String) : LiveData<UserDataJSON?>
     fun makeOrder(idUser : String, basket : BasketData) : LiveData<List<OrderDataJSON>>
 }
 
 class APIcallsServiceImpl(
     private val context : Context
 ) : APIcallsService{
+    private val TAG = "API Calls Service"
     override fun queryCategory(categoryName: String): LiveData<ArrayList<Plat>> {
         val categorydata = MutableLiveData<ArrayList<Plat>>()
 
@@ -36,8 +38,8 @@ class APIcallsServiceImpl(
 
     override fun registerUser(
         firstname: String,name: String,email: String,pass: String,address: String
-    ): LiveData<UserDataJSON>  {
-        val userInfos = MutableLiveData<UserDataJSON>()
+    ): LiveData<UserDataJSON?>  {
+        val userInfos = MutableLiveData<UserDataJSON?>()
 
         val postData = JSONObject()
             .put("id_shop", "1")
@@ -48,16 +50,21 @@ class APIcallsServiceImpl(
             .put("address", address)
 
         callToAPI("http://test.api.catering.bluecodegames.com/user/register", postData).observeForever {
-            val parsedData: RegisterDataResponseJSON = Gson().fromJson(it, RegisterDataResponseJSON::class.java)
+            var parsedData = RegisterDataResponseJSON(null,null)
+            try {
+                parsedData = Gson().fromJson(it, RegisterDataResponseJSON::class.java)
+            }catch (t : Throwable){}
             if(parsedData.isSuccessful()){
                 userInfos.postValue(parsedData.extractUser())
+            }else{
+                userInfos.postValue(null)
             }
         }
         return userInfos
     }
 
-    override fun loginUser(email: String, pass: String): LiveData<UserDataJSON> {
-        val userInfos = MutableLiveData<UserDataJSON>()
+    override fun loginUser(email: String, pass: String): LiveData<UserDataJSON?> {
+        val userInfos = MutableLiveData<UserDataJSON?>()
 
         val postData = JSONObject()
             .put("id_shop", "1")
@@ -65,9 +72,15 @@ class APIcallsServiceImpl(
             .put("password", pass)
 
         callToAPI("http://test.api.catering.bluecodegames.com/user/login", postData).observeForever {
-            val parsedData: RegisterDataResponseJSON = Gson().fromJson(it, RegisterDataResponseJSON::class.java)
+            Log.d(TAG, it.toString())
+            var parsedData = RegisterDataResponseJSON(null,null)
+            try {
+                parsedData = Gson().fromJson(it, RegisterDataResponseJSON::class.java)
+            }catch (t : Throwable){}
             if(parsedData.isSuccessful()){
                 userInfos.postValue(parsedData.extractUser())
+            }else{
+                userInfos.postValue(null)
             }
         }
         return userInfos

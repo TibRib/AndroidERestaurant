@@ -6,6 +6,7 @@ import android.util.Patterns
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import fr.isen.simon.androiderestaurant.R
 import fr.isen.simon.androiderestaurant.databinding.ActivityRegisterBinding
@@ -84,8 +85,15 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun callRegisterService(firstname : String, name: String,email: String,pass: String,address: String){
-        apiService.registerUser(firstname,name,email,pass,address).observeForever {
-            userPreferences.setLoggedIn(true)
+        apiService.registerUser(firstname,name,email,pass,address).observe(this) { user ->
+            if(user != null){
+                Snackbar.make(binding.root, "Enregistré avec succès ✔️", Snackbar.LENGTH_SHORT).show()
+                userPreferences.writeUser(user)
+                userPreferences.setLoggedIn(true)
+                finish()
+            }else{
+                Snackbar.make(binding.root, "Erreur lors de l'inscription ❌", Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 

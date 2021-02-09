@@ -28,4 +28,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="preference_logged_in"></string>
+    <string name="mesInfos">Mes informations</string>
+    <string name="id_label">votre id :</string>
+    <string name="deconnexion">Me déconnecter</string>
 </resources>

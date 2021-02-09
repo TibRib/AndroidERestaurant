@@ -56,16 +56,6 @@ class HomeActivity : AppCompatActivity() {
             this.startActivity(Intent(applicationContext, BasketActivity::class.java))
         }
 
-        binding.loginButton.setOnClickListener {
-            val isLoggedInValue : Boolean? = userVM.isLoggedIn.value
-            if(isLoggedInValue != null) {
-                val nbool = !(isLoggedInValue)
-                userVM.setLoggedIn(nbool)
-                Toast.makeText(applicationContext, "User Logged In = ${nbool}", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-
     }
 
     fun launchCategories(title: String){
