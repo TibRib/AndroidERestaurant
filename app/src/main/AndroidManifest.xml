@@ -12,12 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidERestaurant"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".BasketActivity" />
-        <activity android:name=".PlatDetailsActivity" />
-        <activity android:name=".CategoryActivity" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.BasketActivity" />
+        <activity android:name=".activities.PlatDetailsActivity" />
+        <activity android:name=".activities.CategoryActivity" />
+        <activity android:name=".activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

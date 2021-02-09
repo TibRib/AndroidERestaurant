@@ -1,4 +1,4 @@
-package fr.isen.simon.androiderestaurant.services
+package fr.isen.simon.androiderestaurant.viewmodels
 
 import android.content.Context
 import android.util.Log

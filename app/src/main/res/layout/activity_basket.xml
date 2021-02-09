@@ -5,7 +5,7 @@
     android:id="@+id/Basket"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BasketActivity">
+    tools:context=".activities.BasketActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/AppBarLayout"

@@ -1,4 +1,4 @@
-package fr.isen.simon.androiderestaurant
+package fr.isen.simon.androiderestaurant.activities
 
 import android.animation.Animator
 import android.os.Bundle
@@ -6,11 +6,13 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
+import fr.isen.simon.androiderestaurant.R
+import fr.isen.simon.androiderestaurant.ToolbarFragment
 import fr.isen.simon.androiderestaurant.adapters.CarrouselAdapter
 import fr.isen.simon.androiderestaurant.databinding.ActivityPlatDetailsBinding
-import fr.isen.simon.androiderestaurant.models.BasketService
 import fr.isen.simon.androiderestaurant.models.Plat
-import org.koin.android.ext.android.inject
+import fr.isen.simon.androiderestaurant.viewmodels.BasketViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class PlatDetailsActivity : AppCompatActivity() {
@@ -18,7 +20,7 @@ class PlatDetailsActivity : AppCompatActivity() {
 
     private var quantity : Int = 0
     private var mPlat : Plat? = null
-    private val basketService by inject<BasketService>()
+    private val basketService by viewModel<BasketViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

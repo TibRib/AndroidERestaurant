@@ -1,4 +1,4 @@
-package fr.isen.simon.androiderestaurant.services
+package fr.isen.simon.androiderestaurant.utility
 
 import fr.isen.simon.androiderestaurant.models.BasketService
 import org.koin.core.component.KoinComponent

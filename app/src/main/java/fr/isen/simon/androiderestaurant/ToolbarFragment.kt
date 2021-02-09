@@ -7,15 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import fr.isen.simon.androiderestaurant.activities.BasketActivity
+import fr.isen.simon.androiderestaurant.activities.LoginActivity
 import fr.isen.simon.androiderestaurant.databinding.FragmentToolbarBinding
-import fr.isen.simon.androiderestaurant.models.BasketService
-import fr.isen.simon.androiderestaurant.services.UserPreferencesViewModel
-import org.koin.android.ext.android.inject
+import fr.isen.simon.androiderestaurant.viewmodels.BasketViewModel
+import fr.isen.simon.androiderestaurant.viewmodels.UserPreferencesViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ToolbarFragment : Fragment() {
     private var title: String? = null
-    private val basketService by inject<BasketService>()
+    private val basketViewModel by sharedViewModel<BasketViewModel>()
     private val userPreferences by sharedViewModel<UserPreferencesViewModel>()
 
     private lateinit var binding: FragmentToolbarBinding
@@ -42,7 +44,6 @@ class ToolbarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.toolbarTitle.text = title
-        binding.toolbarItemCount.text = basketService.getItemsCount().toString()
         binding.toolbarBasketIcon.setOnClickListener {
             this.startActivity(Intent(context, BasketActivity::class.java))
         }
@@ -63,11 +64,16 @@ class ToolbarFragment : Fragment() {
             }
         }
 
+        basketViewModel.listSize.observe(viewLifecycleOwner){ size ->
+            Log.d("Fragment Toolbar", "changed basket size : ${size}")
+            binding.toolbarItemCount.text = size.toString()
+        }
+
     }
 
     override fun onResume() {
+        binding.toolbarItemCount.text = basketViewModel.getItemsCount().toString()
         super.onResume()
-        binding.toolbarItemCount.text = basketService.getItemsCount().toString()
     }
 
     companion object {

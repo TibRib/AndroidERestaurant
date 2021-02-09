@@ -2,19 +2,14 @@ package fr.isen.simon.androiderestaurant.adapters
 
 import android.R
 import android.view.LayoutInflater
-import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.view.ViewManager
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.isen.simon.androiderestaurant.databinding.ItemPlatBinding
-import fr.isen.simon.androiderestaurant.models.BasketService
 import fr.isen.simon.androiderestaurant.models.Plat
-import fr.isen.simon.androiderestaurant.services.BasketInjectorUtility
-import org.koin.android.ext.android.inject
-import org.koin.core.context.GlobalContext.get
+import fr.isen.simon.androiderestaurant.utility.BasketInjectorUtility
 
 class CategoryAdapter(
     private val mPlats: List<Plat>,

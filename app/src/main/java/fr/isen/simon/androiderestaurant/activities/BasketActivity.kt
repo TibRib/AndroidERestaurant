@@ -1,20 +1,22 @@
-package fr.isen.simon.androiderestaurant
+package fr.isen.simon.androiderestaurant.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import fr.isen.simon.androiderestaurant.R
+import fr.isen.simon.androiderestaurant.ToolbarFragment
 import fr.isen.simon.androiderestaurant.adapters.CategoryAdapter
 import fr.isen.simon.androiderestaurant.databinding.ActivityBasketBinding
-import fr.isen.simon.androiderestaurant.models.BasketService
+import fr.isen.simon.androiderestaurant.viewmodels.BasketViewModel
 import fr.isen.simon.androiderestaurant.models.Plat
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class BasketActivity : AppCompatActivity() {
 
-    private val basketService by inject<BasketService>()
+    private val basketService by viewModel<BasketViewModel>()
     private lateinit var binding: ActivityBasketBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

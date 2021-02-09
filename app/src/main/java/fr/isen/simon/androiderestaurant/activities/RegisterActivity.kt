@@ -1,6 +1,5 @@
-package fr.isen.simon.androiderestaurant
+package fr.isen.simon.androiderestaurant.activities
 
-import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
@@ -8,9 +7,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import fr.isen.simon.androiderestaurant.R
 import fr.isen.simon.androiderestaurant.databinding.ActivityRegisterBinding
 import fr.isen.simon.androiderestaurant.services.APIcallsService
-import fr.isen.simon.androiderestaurant.services.UserPreferencesViewModel
+import fr.isen.simon.androiderestaurant.viewmodels.UserPreferencesViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 

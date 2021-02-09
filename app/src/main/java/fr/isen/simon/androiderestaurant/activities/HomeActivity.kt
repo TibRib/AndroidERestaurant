@@ -1,12 +1,15 @@
-package fr.isen.simon.androiderestaurant
+package fr.isen.simon.androiderestaurant.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import fr.isen.simon.androiderestaurant.R
+import fr.isen.simon.androiderestaurant.ToolbarFragment
+import fr.isen.simon.androiderestaurant.appModule
 import fr.isen.simon.androiderestaurant.databinding.ActivityHomeBinding
-import fr.isen.simon.androiderestaurant.services.UserPreferencesViewModel
+import fr.isen.simon.androiderestaurant.viewmodels.BasketViewModel
+import fr.isen.simon.androiderestaurant.viewmodels.UserPreferencesViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -16,6 +19,7 @@ import org.koin.core.context.startKoin
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private val userVM by viewModel<UserPreferencesViewModel>()
+    private val basketVM by viewModel<BasketViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
