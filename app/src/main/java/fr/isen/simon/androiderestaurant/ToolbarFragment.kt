@@ -1,23 +1,22 @@
 package fr.isen.simon.androiderestaurant
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import fr.isen.simon.androiderestaurant.databinding.FragmentToolbarBinding
 import fr.isen.simon.androiderestaurant.models.BasketService
-import fr.isen.simon.androiderestaurant.services.UserPreferencesService
+import fr.isen.simon.androiderestaurant.services.UserPreferencesViewModel
 import org.koin.android.ext.android.inject
-
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class ToolbarFragment : Fragment() {
     private var title: String? = null
     private val basketService by inject<BasketService>()
-    private val userPreferences by inject<UserPreferencesService>()
+    private val userPreferences by sharedViewModel<UserPreferencesViewModel>()
 
     private lateinit var binding: FragmentToolbarBinding
 
@@ -51,24 +50,24 @@ class ToolbarFragment : Fragment() {
         binding.toolbarLoginIconNot.setOnClickListener {
             this.startActivity(Intent(context, LoginActivity::class.java))
         }
-        checkIsLoggedIn(binding.toolbarLoginIconYes, binding.toolbarLoginIconNot)
+
+
+        userPreferences.isLoggedIn.observe(viewLifecycleOwner) { isLoggedIn ->
+            Log.d("Fragment Toolbar", "changed isLoggedin to $isLoggedIn")
+            if(isLoggedIn){
+                binding.toolbarLoginIconYes.visibility = View.VISIBLE
+                binding.toolbarLoginIconNot.visibility = View.GONE
+            }else{
+                binding.toolbarLoginIconYes.visibility = View.GONE
+                binding.toolbarLoginIconNot.visibility = View.VISIBLE
+            }
+        }
 
     }
 
     override fun onResume() {
         super.onResume()
         binding.toolbarItemCount.text = basketService.getItemsCount().toString()
-        checkIsLoggedIn(binding.toolbarLoginIconYes, binding.toolbarLoginIconNot)
-    }
-
-    fun checkIsLoggedIn(yesIcon: ImageView, noIcon: ImageView){
-        if(userPreferences.getUserLoggedIn()){
-            yesIcon.visibility = View.VISIBLE
-            noIcon.visibility = View.GONE
-        }else{
-            yesIcon.visibility = View.GONE
-            noIcon.visibility = View.VISIBLE
-        }
     }
 
     companion object {
@@ -80,4 +79,5 @@ class ToolbarFragment : Fragment() {
                 }
             }
     }
+
 }

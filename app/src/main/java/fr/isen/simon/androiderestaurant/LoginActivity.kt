@@ -1,6 +1,5 @@
 package fr.isen.simon.androiderestaurant
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,24 +7,17 @@ import android.text.TextUtils
 import android.util.Patterns
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
-import com.google.gson.JsonElement
 import fr.isen.simon.androiderestaurant.databinding.ActivityLoginBinding
-import fr.isen.simon.androiderestaurant.databinding.ActivityRegisterBinding
-import fr.isen.simon.androiderestaurant.models.RegisterDataResponseJSON
 import fr.isen.simon.androiderestaurant.services.APIcallsService
-import fr.isen.simon.androiderestaurant.services.UserPreferencesService
-import org.json.JSONException
-import org.json.JSONObject
+import fr.isen.simon.androiderestaurant.services.UserPreferencesViewModel
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
-    private val userPreferences by inject<UserPreferencesService>()
+    private val userPreferences by viewModel<UserPreferencesViewModel>()
+
     private val apiService by inject<APIcallsService>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun callLoginService(email: String,pass: String){
         apiService.loginUser(email,pass).observeForever {
-            userPreferences.setUserLoggedIn(true)
+            userPreferences.setLoggedIn(true)
         }
     }
 

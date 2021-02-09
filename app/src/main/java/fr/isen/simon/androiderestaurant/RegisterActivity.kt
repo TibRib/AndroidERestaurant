@@ -7,25 +7,18 @@ import android.util.Patterns
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
-import com.google.gson.JsonElement
 import fr.isen.simon.androiderestaurant.databinding.ActivityRegisterBinding
-import fr.isen.simon.androiderestaurant.models.RegisterDataResponseJSON
 import fr.isen.simon.androiderestaurant.services.APIcallsService
-import fr.isen.simon.androiderestaurant.services.UserPreferencesService
-import org.json.JSONException
-import org.json.JSONObject
+import fr.isen.simon.androiderestaurant.services.UserPreferencesViewModel
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding : ActivityRegisterBinding
 
-    private val userPreferences by inject<UserPreferencesService>()
+    private val userPreferences by viewModel<UserPreferencesViewModel>()
     private val apiService by inject<APIcallsService>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun callRegisterService(firstname : String, name: String,email: String,pass: String,address: String){
         apiService.registerUser(firstname,name,email,pass,address).observeForever {
-            userPreferences.setUserLoggedIn(true)
+            userPreferences.setLoggedIn(true)
         }
     }
 
