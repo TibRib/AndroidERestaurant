@@ -13,7 +13,6 @@ import fr.isen.simon.androiderestaurant.databinding.FragmentToolbarBinding
 import fr.isen.simon.androiderestaurant.viewmodels.BasketViewModel
 import fr.isen.simon.androiderestaurant.viewmodels.UserPreferencesViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 
 class ToolbarFragment : Fragment() {
     private var title: String? = null
@@ -66,13 +65,22 @@ class ToolbarFragment : Fragment() {
 
         basketViewModel.listSize.observe(viewLifecycleOwner){ size ->
             Log.d("Fragment Toolbar", "changed basket size : ${size}")
-            binding.toolbarItemCount.text = size.toString()
+            adaptPastille(size)
         }
 
     }
 
+    fun adaptPastille(quantity : Int){
+        binding.toolbarItemCount.text = quantity.toString()
+        if (quantity>0){
+            binding.pastillePanier.visibility = View.VISIBLE
+        }else{
+            binding.pastillePanier.visibility = View.GONE
+        }
+    }
+
     override fun onResume() {
-        binding.toolbarItemCount.text = basketViewModel.getItemsCount().toString()
+        adaptPastille(basketViewModel.getItemsCount())
         super.onResume()
     }
 

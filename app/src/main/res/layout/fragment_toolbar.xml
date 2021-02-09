@@ -61,6 +61,7 @@
             android:layout_height="28dp"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="8dp"
+            android:visibility="gone"
             app:cardBackgroundColor="#FF5722"
             app:cardCornerRadius="14dp"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_basket_icon"
