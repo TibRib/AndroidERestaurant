@@ -3,17 +3,6 @@ Devoir Android - Ratatouille - Thibaud SIMON
 Pour le cours de développement sous Android Studio
 
 ### En ce moment :
-Partie IV- g/
-+ successful singleton Basket handling thanks to Koin injector
+Partie V- g/ (WIP)
 
-## Previews
-### Menu / Home page
-![menu](repository/images/menu.PNG)
-### Dishes in the Main course category
-![plats](repository/images/plats.PNG)
-### Dishes in the desserts category
-![desserts](repository/images/desserts.PNG)
-### Details page
-![achat](repository/images/achat.PNG)
-### Shopping Basket
-![panier](repository/images/panier.PNG)
+Quoi de mieux qu'une courte vidéo (2min30) pour visualiser l'ensemble de l'application ? -> https://youtu.be/c1BR8hcHjss
