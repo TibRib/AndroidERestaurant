@@ -36,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="64dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PlatSingleTitre">
@@ -70,16 +71,6 @@
                 android:textSize="16sp"
                 tools:text="Ingredients : \n - Chocolat \n - Fraises" />
 
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:rating="4"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:translationX="208dp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -110,6 +101,16 @@
                     android:text="+" />
 
             </LinearLayout>
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="4"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:translationX="208dp" />
 
         </LinearLayout>
     </ScrollView>

@@ -3,17 +3,22 @@ package fr.isen.simon.androiderestaurant.activities
 import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.isen.simon.androiderestaurant.R
 import fr.isen.simon.androiderestaurant.ToolbarFragment
 import fr.isen.simon.androiderestaurant.adapters.CategoryAdapter
 import fr.isen.simon.androiderestaurant.databinding.ActivityBasketBinding
+import fr.isen.simon.androiderestaurant.models.BasketData
 import fr.isen.simon.androiderestaurant.viewmodels.BasketViewModel
 import fr.isen.simon.androiderestaurant.models.Plat
+import fr.isen.simon.androiderestaurant.services.APIcallsService
 import fr.isen.simon.androiderestaurant.viewmodels.UserPreferencesViewModel
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -71,10 +76,41 @@ class BasketActivity : AppCompatActivity() {
             binding.animationYes.visibility = View.VISIBLE
             binding.animationYes.playAnimation()
             binding.btnBasketModal.setOnClickListener {
-                Toast.makeText(applicationContext, "Commande effectuée", Toast.LENGTH_SHORT).show()
-                basketService.clearItems()
-                loadPlats()
-                resetCardAnim()
+                //Loading animation display (burger that builds up)
+                binding.animationYes.visibility = View.GONE
+                binding.animationLoad.visibility = View.VISIBLE
+                binding.animationLoad.playAnimation()
+
+                val apiService : APIcallsService by inject()
+                val user = userPreferences.readUser()
+                if(user != null){
+                    val idUser = user.id
+                    apiService.makeOrder(idUser.toString(), BasketData(basketService.getItems())).observe(this){
+                        if(it.isEmpty()){
+                            Log.w("BasketActivity", "Null list")
+                            Toast.makeText(applicationContext, "Erreur lors de la commande", Toast.LENGTH_SHORT).show()
+                        }else{
+                            Toast.makeText(applicationContext, "Commande effectuée", Toast.LENGTH_SHORT).show()
+                            //OK animation display (big thumbs up !)
+                            binding.animationLoad.visibility = View.GONE
+                            binding.animationOk.visibility = View.VISIBLE
+                            binding.animationOk.playAnimation()
+
+                            basketService.clearItems()
+                            loadPlats()
+
+                            binding.textViewBasketModal.text = "Commande effectuée avec brio !"
+                            binding.btnBasketModal.text = "Afficher mes commandes"
+                            binding.btnBasketModal.setOnClickListener {
+                                //Load orders view
+                                TODO()
+                            }
+                        }
+                    }
+                }else{
+                    Log.w("BasketActivity", "Null user in preferences : No id")
+                    Toast.makeText(applicationContext, "Erreur lors de la commande", Toast.LENGTH_SHORT).show()
+                }
             }
         }else{
             binding.textViewBasketModal.text= "Vous n'êtes pas identifié !"
@@ -102,7 +138,10 @@ class BasketActivity : AppCompatActivity() {
         binding.animationNope.imageAssetsFolder = "images/"
         binding.animationYes.visibility = View.GONE
         binding.animationNope.visibility = View.GONE
+        binding.animationLoad.visibility = View.GONE
+        binding.animationOk.visibility = View.GONE
         binding.animationLoginHolder.visibility = View.GONE
+
     }
 
     private fun loadPlats(){

@@ -17,6 +17,8 @@ interface APIcallsService{
     fun registerUser(firstname : String, name: String,email: String,pass: String,address: String) : LiveData<UserDataJSON?>
     fun loginUser(email: String, pass: String) : LiveData<UserDataJSON?>
     fun makeOrder(idUser : String, basket : BasketData) : LiveData<List<OrderDataJSON>>
+    fun listOrders(idUser : String) : LiveData<List<OrderDataJSON>>
+
 }
 
 class APIcallsServiceImpl(
@@ -111,6 +113,22 @@ class APIcallsServiceImpl(
             .put("msg", Gson().toJson(basket))
 
         callToAPI("http://test.api.catering.bluecodegames.com/user/order", postData).observeForever {
+            val parsedData: OrderResponseDataJSON = Gson().fromJson(it, OrderResponseDataJSON::class.java)
+            if(parsedData.isSuccessful()){
+                orders.postValue(parsedData.extractOrders())
+            }
+        }
+        return orders
+    }
+
+    override fun listOrders(idUser : String) : LiveData<List<OrderDataJSON>> {
+        val orders = MutableLiveData<List<OrderDataJSON>>()
+
+        val postData = JSONObject()
+            .put("id_shop", "1")
+            .put("id_user", idUser)
+
+        callToAPI("http://test.api.catering.bluecodegames.com/user/listorders", postData).observeForever {
             val parsedData: OrderResponseDataJSON = Gson().fromJson(it, OrderResponseDataJSON::class.java)
             if(parsedData.isSuccessful()){
                 orders.postValue(parsedData.extractOrders())

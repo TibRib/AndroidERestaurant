@@ -2,4 +2,6 @@
 <resources>
     <string name="user_nope">https://assets3.lottiefiles.com/packages/lf20_DQyjhI.json</string>
     <string name="user_yes">https://assets9.lottiefiles.com/packages/lf20_sZurBg.json</string>
+    <string name="loading_order">https://assets8.lottiefiles.com/packages/lf20_vf2Men.json</string>
+    <string name="animation_ok">https://assets7.lottiefiles.com/packages/lf20_5zYhWw.json</string>
 </resources>
