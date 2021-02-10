@@ -49,7 +49,7 @@ class BasketActivity : AppCompatActivity() {
         }
 
         binding.orderBtn.setOnClickListener {
-            checkAndDisplayModal()
+            if( binding.orderBtn.isClickable) checkAndDisplayModal()
         }
 
         binding.basketModalCloseBtn.setOnClickListener {
@@ -108,10 +108,15 @@ class BasketActivity : AppCompatActivity() {
     private fun loadPlats(){
         val price = basketService.getTotalPrice().toString() + "€"
         binding.totalBasket.text = "Total : ${price}"
-        val nbArticles = basketService.getItemsCount().toString()
+        val nbArticlesInt = basketService.getItemsCount()
+        val nbArticles= nbArticlesInt.toString()
         binding.nbArticles.text = "Pour ${nbArticles} articles dans le panier"
         displayCategories(basketService.getItems())
-
+        if(nbArticlesInt>0){
+            binding.orderBtn.setAlpha(1.0f);
+        }else{
+            binding.orderBtn.setAlpha(.5f);
+        }
     }
 
     private fun displayCategories(plats: ArrayList<Plat>) {
@@ -128,6 +133,7 @@ class BasketActivity : AppCompatActivity() {
             }
         },{
             basketService.removeItem(it)
+            loadPlats()
         })
     }
 
