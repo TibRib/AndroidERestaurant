@@ -49,7 +49,7 @@ class CategoryActivity : AppCompatActivity() {
             intent.putExtra("plat",it)
 
             startActivity(intent)
-        },{})
+        },{},{})
 
     }
 

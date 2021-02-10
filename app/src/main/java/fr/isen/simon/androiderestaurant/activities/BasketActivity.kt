@@ -126,6 +126,8 @@ class BasketActivity : AppCompatActivity() {
             }else{
                 it.visibility = View.GONE
             }
+        },{
+            basketService.removeItem(it)
         })
     }
 

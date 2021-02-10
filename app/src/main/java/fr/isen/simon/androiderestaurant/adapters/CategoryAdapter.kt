@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.isen.simon.androiderestaurant.databinding.ItemPlatBinding
 import fr.isen.simon.androiderestaurant.models.Plat
-import fr.isen.simon.androiderestaurant.utility.BasketInjectorUtility
+import fr.isen.simon.androiderestaurant.viewmodels.BasketViewModel
 
 class CategoryAdapter(
     private val mPlats: List<Plat>,
     private val categoryClickListener: (Plat) -> Unit,
-    private val categoryLongClickListener: (ImageButton) -> Unit
+    private val categoryLongClickListener: (ImageButton) -> Unit,
+    private val deletePlatAction: (Plat) -> Unit
 ): RecyclerView.Adapter<CategoryAdapter.CategoryHolder>() {
 
     override fun onCreateViewHolder(
@@ -52,7 +53,7 @@ class CategoryAdapter(
 
         holder.deleteIcon.setOnClickListener {
             (it.getParent() as ViewManager).removeView(it)
-            BasketInjectorUtility().getService().removeItem(myItem)
+            deletePlatAction.invoke(myItem)
         }
 
     }
