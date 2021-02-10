@@ -216,6 +216,16 @@
                 app:lottie_loop="false"
                 app:lottie_url="@string/animation_ok" />
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationFail"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="false"
+                app:lottie_url="@string/animation_fail" />
+
             <TextView
                 android:id="@+id/textViewBasketModal"
                 android:layout_width="match_parent"

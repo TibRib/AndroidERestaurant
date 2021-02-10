@@ -88,7 +88,11 @@ class BasketActivity : AppCompatActivity() {
                     apiService.makeOrder(idUser.toString(), BasketData(basketService.getItems())).observe(this){
                         if(it.isEmpty()){
                             Log.w("BasketActivity", "Null list")
+                            binding.animationLoad.visibility = View.GONE
+                            binding.animationFail.visibility = View.VISIBLE
+                            binding.animationFail.playAnimation()
                             Toast.makeText(applicationContext, "Erreur lors de la commande", Toast.LENGTH_SHORT).show()
+                            binding.textViewBasketModal.text = "Erreur serveur lors de la la commande ( :no_response )"
                         }else{
                             Toast.makeText(applicationContext, "Commande effectuée", Toast.LENGTH_SHORT).show()
                             //OK animation display (big thumbs up !)
@@ -110,6 +114,10 @@ class BasketActivity : AppCompatActivity() {
                 }else{
                     Log.w("BasketActivity", "Null user in preferences : No id")
                     Toast.makeText(applicationContext, "Erreur lors de la commande", Toast.LENGTH_SHORT).show()
+                    binding.animationLoad.visibility = View.GONE
+                    binding.animationFail.visibility = View.VISIBLE
+                    binding.animationFail.playAnimation()
+                    binding.textViewBasketModal.text = "Erreur client sur la commande ( :no_uid )"
                 }
             }
         }else{
@@ -140,6 +148,7 @@ class BasketActivity : AppCompatActivity() {
         binding.animationNope.visibility = View.GONE
         binding.animationLoad.visibility = View.GONE
         binding.animationOk.visibility = View.GONE
+        binding.animationFail.visibility = View.GONE
         binding.animationLoginHolder.visibility = View.GONE
 
     }
